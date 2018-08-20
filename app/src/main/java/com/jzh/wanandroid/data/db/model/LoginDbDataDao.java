@@ -112,6 +112,7 @@ public class LoginDbDataDao extends AbstractDao<LoginDbData, Void> {
 
     @Override
     public boolean hasKey(LoginDbData entity) {
+        // TODO
         return false;
     }
 

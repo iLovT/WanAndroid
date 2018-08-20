@@ -28,6 +28,10 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+
         <!--友盟集成-->
         <meta-data
             android:name="UMENG_APPKEY"

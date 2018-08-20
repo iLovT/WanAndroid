@@ -16,6 +16,7 @@ import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.ui.base.BaseActivity;
+import com.jzh.wanandroid.ui.main.MainActivity;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import javax.inject.Inject;
@@ -44,7 +45,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
     private long exitTime = 0;
     @Inject
     LoginPresenter<LoginMvpView> mPresenter;
-    private boolean isVisible = true, isUserNotNull, isPassNotNull;
+    private boolean isVisible = true;
 
     @Override
     protected int getLayoutId() {
@@ -57,6 +58,10 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
         setUnBinder(ButterKnife.bind(this));
         mPresenter.onAttach(this);
         setHeadVisibility(View.GONE);
+        initListener();
+    }
+
+    private void initListener() {
         username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,13 +76,11 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s) && s.length() > 0) {
-                    isUserNotNull = true;
-                    if (isPassNotNull) {
+                    if (!TextUtils.isEmpty(getPassword())) {
                         ivLogin.setBackgroundResource(R.drawable.btn_selector);
                         ivLogin.setEnabled(true);
                     }
                 } else {
-                    isUserNotNull = false;
                     ivLogin.setBackgroundResource(R.drawable.btn_not_selector);
                     ivLogin.setEnabled(false);
                 }
@@ -98,14 +101,12 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s) && s.length() > 0) {
                     pwdVisible.setVisibility(View.VISIBLE);
-                    isPassNotNull = true;
-                    if (isUserNotNull) {
+                    if (!TextUtils.isEmpty(getUsername())) {
                         ivLogin.setBackgroundResource(R.drawable.btn_selector);
                         ivLogin.setEnabled(true);
                     }
                 } else {
                     pwdVisible.setVisibility(View.GONE);
-                    isPassNotNull = false;
                     ivLogin.setBackgroundResource(R.drawable.btn_not_selector);
                     ivLogin.setEnabled(false);
                 }
@@ -134,20 +135,21 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
                     pwdVisible.setBackgroundResource(R.drawable.password_invisible);
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
-                if (!TextUtils.isEmpty(password.getText().toString()) && password.getText().length() > 0) {
-                    Selection.setSelection(password.getText(), password.getText().length());
+                if (!TextUtils.isEmpty(getPassword()) && getPassword().length() > 0) {
+                    Selection.setSelection(password.getText(), getPassword().length());
                 }
                 break;
             case R.id.iv_login:
                 hideKeyboard();
                 if (getUsername().length() < 6 || getPassword().length() < 6) {
-                    onToastWarn("用户名和密码长度不能少于六位");
+                    onToastWarn(R.string.user_password_not_null_six);
                     return;
                 }
                 showProgressLoadingDialog(getString(R.string.login_loading));
                 mPresenter.doLoginCall(getUsername(), getPassword());
                 break;
             case R.id.tv_register:
+                goActivity(RegisterActivity.class);
                 break;
             case R.id.tv_forgetpsd:
                 break;
@@ -162,7 +164,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == android.view.KeyEvent.KEYCODE_BACK && event.getAction() == android.view.KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                onToastInfo("再按一次返回键退出程序");
+                onToastInfo(R.string.try_one_exit);
                 exitTime = System.currentTimeMillis();
             } else {
                 MyApp.getInstance().exit();
@@ -184,15 +186,15 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         hideKeyboard();
         if (TextUtils.isEmpty(getUsername())) {
-            onToastWarn("用户名不能为空");
+            onToastWarn(R.string.username_not_null);
             return false;
         }
         if (TextUtils.isEmpty(getPassword())) {
-            onToastWarn("密码不能为空");
+            onToastWarn(R.string.password_not_null);
             return false;
         }
         if (getUsername().length() < 6 || getPassword().length() < 6) {
-            onToastWarn("用户名和密码长度不能少于六位");
+            onToastWarn(R.string.user_password_not_null_six);
             return false;
         }
         showProgressLoadingDialog(getString(R.string.login_loading));
@@ -202,7 +204,9 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
 
     @Override
     public void onSucc(LoginResponse response) {
-
+        onToastSucc(R.string.login_succ);
+        goActivity(MainActivity.class);
+        finish();
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.jzh.wanandroid.data.db.DbHelper;
 import com.jzh.wanandroid.data.pref.PreferencesHelper;
 import com.jzh.wanandroid.di.ApplicationContext;
 import com.jzh.wanandroid.entity.login.LoginResponse;
+import com.jzh.wanandroid.entity.login.RegisterResponse;
 import com.jzh.wanandroid.network.ApiHelper;
 
 import javax.inject.Inject;
@@ -60,5 +61,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<LoginResponse> doLoginApiCall(String username, String password) {
         return mApiHelper.doLoginApiCall(username, password);
+    }
+
+    @Override
+    public Observable<RegisterResponse> doRegisterApiCall(String username, String password, String repassword) {
+        return mApiHelper.doRegisterApiCall(username, password, repassword);
     }
 }

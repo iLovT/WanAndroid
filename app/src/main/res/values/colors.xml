@@ -10,4 +10,7 @@
     <color name="black">#000000</color>
     <color name="bg_select_color">#03A9F4</color>
     <color name="bg_not_select_color">#80D3F8</color>
+    <color name="app_color">#18010B</color>
+    <color name="tab_normal_color">#a3a3a3</color>
+    <color name="tab_selected_color">#47bafc</color>
 </resources>

@@ -59,5 +59,5 @@ ext {
     multidexVersion = '1.0.1'
     swipebacklayoutVersion = '1.1.9'
     umengUtdidVersion = '1.1.5.3'
-    loggingVersion = '3.4.1'
+    loggingVersion = '3.9.0'
 }

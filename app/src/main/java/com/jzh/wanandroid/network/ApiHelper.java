@@ -2,6 +2,7 @@ package com.jzh.wanandroid.network;
 
 
 import com.jzh.wanandroid.entity.login.LoginResponse;
+import com.jzh.wanandroid.entity.login.RegisterResponse;
 
 import io.reactivex.Observable;
 
@@ -22,4 +23,14 @@ public interface ApiHelper {
      * @return loginresponse
      */
     Observable<LoginResponse> doLoginApiCall(String username, String password);
+
+    /**
+     * 注册
+     *
+     * @param username   user name
+     * @param password   password
+     * @param repassword repassword
+     * @return registerresponse
+     */
+    Observable<RegisterResponse> doRegisterApiCall(String username, String password, String repassword);
 }

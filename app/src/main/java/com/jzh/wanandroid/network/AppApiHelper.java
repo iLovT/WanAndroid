@@ -1,6 +1,7 @@
 package com.jzh.wanandroid.network;
 
 import com.jzh.wanandroid.entity.login.LoginResponse;
+import com.jzh.wanandroid.entity.login.RegisterResponse;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,5 +29,10 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<LoginResponse> doLoginApiCall(String username, String password) {
         return retrofit.create(ApiService.class).doLoginCall(username, password);
+    }
+
+    @Override
+    public Observable<RegisterResponse> doRegisterApiCall(String username, String password, String repassword) {
+        return retrofit.create(ApiService.class).doRegisterCall(username, password, repassword);
     }
 }

@@ -36,7 +36,7 @@ public class LoginPresenter<v extends LoginMvpView> extends BasePresenter<v> imp
                             @Override
                             public void accept(@NonNull LoginResponse response) throws Exception {
                                 getMvpView().hideProgressLoadingDialog();
-                                if (response.getErrorCode() > 0) {
+                                if (response.getErrorCode() >= 0) {
                                     getMvpView().onSucc(response);
                                     getDataManager().setLoginStaus(true);
                                 } else {

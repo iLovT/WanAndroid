@@ -29,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Email:jzh970611@163.com
  * Github:https://github.com/iLovT
  */
-
 public class RetrofitManager {
     private static final String CACHE_NAME = "retrofitcache";
     private static Retrofit retrofit = null;
@@ -48,7 +47,7 @@ public class RetrofitManager {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.LOG_DEBUG) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(loggingInterceptor);
         }
         File cacheFile = new File(MyApp.getInstance().getExternalCacheDir(), CACHE_NAME);
