@@ -1,8 +1,6 @@
 package com.jzh.wanandroid.ui.base;
 
 
-import com.jzh.wanandroid.network.ANError;
-
 /**
  * Author:jzh
  * desc:view 基本persenter 操作基础类，定义view 控件界面的基本操作功能
@@ -17,7 +15,7 @@ public interface MvpPresenter<V extends MvpView> {
 
     void onDetach();
 
-    void handleApiError(ANError error);
+    void handleApiError(String msg);
 
     void handleApiCode(int code);
 

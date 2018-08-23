@@ -5,6 +5,7 @@ import com.jzh.wanandroid.di.PerActivity;
 import com.jzh.wanandroid.di.module.ActivityModule;
 import com.jzh.wanandroid.ui.login.LoginActivity;
 import com.jzh.wanandroid.ui.login.RegisterActivity;
+import com.jzh.wanandroid.ui.main.MainActivity;
 
 import dagger.Component;
 
@@ -22,4 +23,6 @@ public interface ActivityComponent {
     void inject(LoginActivity loginActivity);
 
     void inject(RegisterActivity registerActivity);
+
+    void inject(MainActivity mainActivity);
 }

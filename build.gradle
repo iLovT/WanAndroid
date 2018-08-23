@@ -33,7 +33,7 @@ ext {
     targetSdkVersion = 26
     espressoCoreVersion = '2.2.2'
     constraintLayoutVersion = '1.0.2'
-    supportLibraryVersion = '26.+'
+    supportLibraryVersion = '27.1.1'
     junitVersion = '4.12'
     multidexVersion = '1.0.1'
     rxjava2Version = '2.0.6'
@@ -49,7 +49,7 @@ ext {
     butterKnifeVersion = '8.8.1'
     baseAdapterVersion = '2.9.22'
     bottomBarLayoutVersion = '1.1.2'
-    glideVersion = '3.7.0'
+    glideVersion = '4.7.1'
     greenDaoVersion = '3.2.0'
     debugDBVersion = '1.0.0'
     convenientBannerVersion = '2.0.5'
@@ -60,4 +60,7 @@ ext {
     swipebacklayoutVersion = '1.1.9'
     umengUtdidVersion = '1.1.5.3'
     loggingVersion = '3.9.0'
+    jsoupVersion = '1.11.3'
+    BigImageViewPagerVersion = 'v4_1.2.3'
+    magicIndicatorVersion = '1.5.0'
 }

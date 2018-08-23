@@ -1,12 +1,18 @@
 package com.jzh.wanandroid.network;
 
+import com.jzh.wanandroid.entity.home.ArticleResponse;
+import com.jzh.wanandroid.entity.home.BannerResponse;
+import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * author:jzh
@@ -35,4 +41,24 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("user/register")
     Observable<RegisterResponse> doRegisterCall(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
+
+    /**
+     * 获取banner
+     *
+     * @return banner response
+     */
+    @GET("banner/json")
+    Observable<BannerResponse> doGetBannerCall();
+
+    @GET("article/list/{offset}/json")
+    Observable<ArticleResponse> doGetArticleCall(@Path("offset") int offset);
+
+    @POST("lg/collect/{id}/json")
+    Observable<CollectionResponse> doCollectionArticleCall(@Path("id") Long id);
+
+    @POST("lg/uncollect_originId/{id}/json")
+    Observable<CollectionResponse> doUnCollectionArticleCall(@Path("id") Long id);
+
+    @GET("project/tree/json")
+    Observable<ProjectTypeResponse> doGetProjectTypeCall();
 }

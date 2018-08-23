@@ -30,7 +30,11 @@ import android.widget.Toast;
 
 import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
+import com.jzh.wanandroid.di.component.DaggerFragmentComponent;
+import com.jzh.wanandroid.di.component.FragmentComponent;
+import com.jzh.wanandroid.di.module.FragmentModule;
 import com.jzh.wanandroid.listener.OnMultiClickListener;
+import com.jzh.wanandroid.utils.AppLogger;
 import com.jzh.wanandroid.utils.CommonUtils;
 import com.jzh.wanandroid.utils.NetworkUtils;
 import com.jzh.wanandroid.utils.ScreenSwitch;
@@ -70,6 +74,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     private String networkErrorTag = "NETWORK_ERROR_TAG";
     private String networkLoadingTag = "NETWORK_LOADING_TAG";
     private ProgressLoadingDialog mProgressDialog;
+    private FragmentComponent mFragmentComponent;
     /**
      * 判断是否需要检测权限，防止不停的弹框
      */
@@ -121,11 +126,14 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mFragmentComponent = DaggerFragmentComponent.builder()
+                .fragmentModule(new FragmentModule(this))
+                .applicationComponent(((MyApp) getActivity().getApplication()).getComponent()).build();
         baseView = inflater.inflate(R.layout.title_base, container, false);
         initViews(baseView);
         if (getLayoutId() != 0) {
             view = inflater.inflate(getLayoutId(), container, false);
-            baseContentView.addView(view, 0);
+            baseContentView.addView(view);
         }
         initWidget(view);
         lazyLoad();
@@ -141,6 +149,10 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         if (null != headLayout) {
             headLayout.setVisibility(visibility);
         }
+    }
+
+    public FragmentComponent getFragmentComponent() {
+        return mFragmentComponent;
     }
 
     private void initViews(View baseView) {
@@ -344,7 +356,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     public void showErrorLayout(String msg) {
         hideErrorLayout();
         View view = View.inflate(getActivity(), R.layout.base_network_error, null);
-        TextView tv = (TextView) view.findViewById(R.id.base_error_tv);
+        TextView tv = view.findViewById(R.id.base_error_tv);
         tv.setText(TextUtils.isEmpty(msg) ? getString(R.string.network_error) : msg);
         baseContentView.addView(view);
         view.setTag(networkErrorTag);

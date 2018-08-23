@@ -4,11 +4,18 @@ import android.content.Context;
 
 
 import com.jzh.wanandroid.data.db.DbHelper;
+import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
 import com.jzh.wanandroid.data.pref.PreferencesHelper;
 import com.jzh.wanandroid.di.ApplicationContext;
+import com.jzh.wanandroid.entity.home.ArticleResponse;
+import com.jzh.wanandroid.entity.home.BannerResponse;
+import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.network.ApiHelper;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -66,5 +73,40 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<RegisterResponse> doRegisterApiCall(String username, String password, String repassword) {
         return mApiHelper.doRegisterApiCall(username, password, repassword);
+    }
+
+    @Override
+    public Observable<BannerResponse> doGetBannerApiCall() {
+        return mApiHelper.doGetBannerApiCall();
+    }
+
+    @Override
+    public Observable<ArticleResponse> doGetArticleApiCall(int offset) {
+        return mApiHelper.doGetArticleApiCall(offset);
+    }
+
+    @Override
+    public Observable<CollectionResponse> doCollectionArticleApiCall(Long id) {
+        return mApiHelper.doCollectionArticleApiCall(id);
+    }
+
+    @Override
+    public Observable<CollectionResponse> doUnCollectionArticleApiCall(Long id) {
+        return mApiHelper.doUnCollectionArticleApiCall(id);
+    }
+
+    @Override
+    public Observable<ProjectTypeResponse> doGetProjectTypeApiCall() {
+        return mApiHelper.doGetProjectTypeApiCall();
+    }
+
+    @Override
+    public Observable<Boolean> saveProjectTypeData(List<ProjectTypeResponseData> datas) {
+        return mDbHelper.saveProjectTypeData(datas);
+    }
+
+    @Override
+    public List<ProjectTypeResponseData> getProjectTypeData() {
+        return mDbHelper.getProjectTypeData();
     }
 }

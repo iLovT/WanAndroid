@@ -43,6 +43,6 @@ public class LoginPresenter<v extends LoginMvpView> extends BasePresenter<v> imp
                                     getMvpView().onFail(response.getErrorMsg());
                                 }
                             }
-                        }, getConsumer()));
+                        }, getConsumer(false)));
     }
 }

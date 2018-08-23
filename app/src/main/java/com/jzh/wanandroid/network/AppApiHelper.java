@@ -1,7 +1,11 @@
 package com.jzh.wanandroid.network;
 
+import com.jzh.wanandroid.entity.home.ArticleResponse;
+import com.jzh.wanandroid.entity.home.BannerResponse;
+import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -34,5 +38,30 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<RegisterResponse> doRegisterApiCall(String username, String password, String repassword) {
         return retrofit.create(ApiService.class).doRegisterCall(username, password, repassword);
+    }
+
+    @Override
+    public Observable<BannerResponse> doGetBannerApiCall() {
+        return retrofit.create(ApiService.class).doGetBannerCall();
+    }
+
+    @Override
+    public Observable<ArticleResponse> doGetArticleApiCall(int offset) {
+        return retrofit.create(ApiService.class).doGetArticleCall(offset);
+    }
+
+    @Override
+    public Observable<CollectionResponse> doCollectionArticleApiCall(Long id) {
+        return retrofit.create(ApiService.class).doCollectionArticleCall(id);
+    }
+
+    @Override
+    public Observable<CollectionResponse> doUnCollectionArticleApiCall(Long id) {
+        return retrofit.create(ApiService.class).doUnCollectionArticleCall(id);
+    }
+
+    @Override
+    public Observable<ProjectTypeResponse> doGetProjectTypeApiCall() {
+        return retrofit.create(ApiService.class).doGetProjectTypeCall();
     }
 }

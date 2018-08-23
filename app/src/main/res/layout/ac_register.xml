@@ -9,19 +9,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/dp_30"
         android:text="@string/register"
         android:textColor="#101010"
-        android:textSize="18sp" />
+        android:textSize="@dimen/sp_18" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="370dp"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
         android:background="@drawable/shadow_bg"
-        android:elevation="4dp"
+        android:elevation="@dimen/dp_4"
         android:orientation="vertical">
 
         <ImageView
@@ -29,8 +29,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_40"
             android:background="@mipmap/ic_launcher" />
 
 
@@ -38,17 +38,17 @@
             android:id="@+id/edit_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="7dp"
+            android:layout_marginRight="@dimen/dp_7"
             android:hint="@string/tv_account"
             android:imeOptions="actionNext"
             android:maxLength="11"
             android:maxLines="1"
             android:textColorHint="@color/hintcolor"
             android:textCursorDrawable="@drawable/text_cursor_base"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             app:met_clearButton="true"
             app:met_iconLeft="@drawable/icon_account"
-            app:met_iconPadding="2dp"
+            app:met_iconPadding="@dimen/dp_2"
             app:met_maxCharacters="11"
             app:met_primaryColor="@color/bg_select_color"
             app:met_singleLineEllipsis="true"
@@ -63,7 +63,7 @@
                 android:id="@+id/edit_psd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="7dp"
+                android:layout_marginRight="@dimen/dp_7"
                 android:hint="@string/tv_psd"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
@@ -71,9 +71,9 @@
                 android:maxLines="1"
                 android:textColorHint="@color/hintcolor"
                 android:textCursorDrawable="@drawable/text_cursor_base"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp_16"
                 app:met_iconLeft="@drawable/icon_psd"
-                app:met_iconPadding="2dp"
+                app:met_iconPadding="@dimen/dp_2"
                 app:met_maxCharacters="15"
                 app:met_primaryColor="@color/bg_select_color"
                 app:met_singleLineEllipsis="true"
@@ -84,8 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginRight="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_3"
                 android:background="@drawable/password_invisible"
                 android:visibility="gone" />
         </FrameLayout>
@@ -98,7 +98,7 @@
                 android:id="@+id/edit_psd_sure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="7dp"
+                android:layout_marginRight="@dimen/dp_7"
                 android:hint="@string/password_again"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
@@ -106,9 +106,9 @@
                 android:maxLines="1"
                 android:textColorHint="@color/hintcolor"
                 android:textCursorDrawable="@drawable/text_cursor_base"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp_16"
                 app:met_iconLeft="@drawable/icon_psd"
-                app:met_iconPadding="2dp"
+                app:met_iconPadding="@dimen/dp_2"
                 app:met_maxCharacters="15"
                 app:met_primaryColor="@color/bg_select_color"
                 app:met_singleLineEllipsis="true"
@@ -119,8 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginRight="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_3"
                 android:background="@drawable/password_invisible"
                 android:visibility="gone" />
         </FrameLayout>
@@ -128,14 +128,14 @@
         <Button
             android:id="@+id/iv_register"
             android:layout_width="200dp"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/dp_35"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/btn_not_selector"
             android:enabled="false"
             android:text="@string/register"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="@dimen/sp_14" />
 
     </LinearLayout>
 
@@ -145,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/dp_20"
         android:text="@string/has_login"
-        android:textSize="14sp" />
+        android:textSize="@dimen/sp_14" />
 </RelativeLayout>

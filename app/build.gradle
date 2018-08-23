@@ -55,7 +55,7 @@ android {
 }
 //数据库版本配置
 greendao {
-    schemaVersion 1  //对应当前数据库版本
+    schemaVersion 2  //对应当前数据库版本
     daoPackage 'com.jzh.wanandroid.data.db.model'  //由GreenDao自动生成代码所在的包名，默认的是在项目包下面新建一个gen。
     targetGenDir 'src/main/java' //设置自动生成代码的目录。
 }
@@ -104,6 +104,11 @@ dependencies {
     compile "com.github.chaychan:BottomBarLayout:$rootProject.bottomBarLayoutVersion"
     //glide
     compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    compile "com.github.bumptech.glide:annotations:$rootProject.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+    compile "com.github.bumptech.glide:okhttp3-integration:$rootProject.glideVersion"
+    //viewpager photo
+    compile "com.github.SherlockGougou:BigImageViewPager:$rootProject.BigImageViewPagerVersion"
     // database greenDao
     compile "org.greenrobot:greendao:$rootProject.greenDaoVersion"
     //database debug tools
@@ -126,4 +131,7 @@ dependencies {
     compile 'com.umeng.sdk:common:latest.integration'
     compile "com.umeng.sdk:utdid:$rootProject.umengUtdidVersion"
     compile 'com.umeng.sdk:analytics:latest.integration'
+    //jsoup
+    compile "org.jsoup:jsoup:$rootProject.jsoupVersion"
+    compile "com.github.hackware1993:MagicIndicator:$rootProject.magicIndicatorVersion"
 }

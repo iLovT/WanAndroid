@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shadow_bg"
+    android:elevation="4dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_5">
+
+        <ImageView
+            android:id="@+id/adapter_iv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/author" />
+
+        <TextView
+            android:id="@+id/adapter_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_toRightOf="@id/adapter_iv_author"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_12"
+            tools:text="xxx" />
+
+        <TextView
+            android:id="@+id/adapter_tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/app_color"
+            android:textSize="@dimen/sp_12"
+            tools:text="xxx" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/adapter_tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16"
+        tools:text="xxxx" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/adapter_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/adapter_time"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/adapter_collection"
+            android:background="@drawable/time" />
+
+        <TextView
+            android:id="@+id/adapter_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_7"
+            android:layout_marginStart="@dimen/dp_7"
+            android:layout_toEndOf="@+id/adapter_time"
+            android:layout_toRightOf="@+id/adapter_time"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_12"
+            tools:text="1天前" />
+
+        <LinearLayout
+            android:id="@+id/adapter_article_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/adapter_tv_red_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/article_red_type"
+                android:gravity="center"
+                android:paddingEnd="@dimen/dp_5"
+                android:paddingStart="@dimen/dp_5"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_12"
+                android:visibility="gone"
+                tools:text="新" />
+
+            <TextView
+                android:id="@+id/adapter_tv_green_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:background="@drawable/article_type"
+                android:gravity="center"
+                android:paddingEnd="@dimen/dp_5"
+                android:paddingStart="@dimen/dp_5"
+                android:textColor="@color/title_bar"
+                android:textSize="@dimen/sp_12"
+                android:visibility="gone"
+                tools:text="新" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

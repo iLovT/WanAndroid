@@ -6,10 +6,10 @@
               android:background="@drawable/progress_custom_bg"
               android:gravity="center_horizontal"
               android:orientation="vertical"
-              android:paddingBottom="30dp"
-              android:paddingLeft="30dp"
-              android:paddingRight="30dp"
-              android:paddingTop="30dp" >
+              android:paddingBottom="@dimen/dp_30"
+              android:paddingLeft="@dimen/dp_30"
+              android:paddingRight="@dimen/dp_30"
+              android:paddingTop="@dimen/dp_30" >
 
     <ImageView
         android:id="@+id/spinnerImageView"
@@ -21,7 +21,7 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textColor="#FFFFFF" />
+        android:layout_marginTop="@dimen/dp_15"
+        android:textColor="@color/white" />
 
 </LinearLayout>

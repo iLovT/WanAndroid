@@ -1,8 +1,12 @@
 package com.jzh.wanandroid.network;
 
 
+import com.jzh.wanandroid.entity.home.ArticleResponse;
+import com.jzh.wanandroid.entity.home.BannerResponse;
+import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
 import io.reactivex.Observable;
 
@@ -33,4 +37,41 @@ public interface ApiHelper {
      * @return registerresponse
      */
     Observable<RegisterResponse> doRegisterApiCall(String username, String password, String repassword);
+
+    /**
+     * 获取banner数据
+     *
+     * @return banner response
+     */
+    Observable<BannerResponse> doGetBannerApiCall();
+
+    /**
+     * 获取首页文章列表
+     *
+     * @return response
+     */
+    Observable<ArticleResponse> doGetArticleApiCall(int offset);
+
+    /**
+     * 收藏站内文章
+     *
+     * @param id 文章id
+     * @return collectionresponse
+     */
+    Observable<CollectionResponse> doCollectionArticleApiCall(Long id);
+
+    /**
+     * 取消收藏文章列表
+     *
+     * @param id id
+     * @return collectionresponse
+     */
+    Observable<CollectionResponse> doUnCollectionArticleApiCall(Long id);
+
+    /**
+     * 获取项目分类
+     *
+     * @return projectresponse
+     */
+    Observable<ProjectTypeResponse> doGetProjectTypeApiCall();
 }

@@ -1,14 +1,13 @@
 package com.jzh.wanandroid.ui.base;
 
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
 
 import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
-import com.jzh.wanandroid.common.ANConstants;
 import com.jzh.wanandroid.data.DataManager;
-import com.jzh.wanandroid.network.ANError;
+import com.jzh.wanandroid.network.ExceptionHandle;
 import com.jzh.wanandroid.utils.AppLogger;
-import com.jzh.wanandroid.utils.NetworkUtils;
 
 import javax.inject.Inject;
 
@@ -80,29 +79,9 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     }
 
     @Override
-    public void handleApiError(ANError error) {
-        if (error == null || error.getErrorBody() == null) {
-            if (NetworkUtils.isNetworkConnected(MyApp.getInstance())) {
-                getMvpView().onToastFail(R.string.server_error);
-            } else {
-                getMvpView().onToastFail(R.string.network_error);
-            }
-            return;
-        }
-        AppLogger.e(TAG, "请求失败：" + error.toString());
-        if (error.getErrorDetail().equals(ANConstants.CONNECTION_ERROR)) {
-            getMvpView().onToastFail(R.string.network_error);
-            return;
-        }
-
-        if (error.getErrorDetail().equals(ANConstants.REQUEST_CANCELLED_ERROR)) {
-            getMvpView().onToastFail(R.string.retry);
-            return;
-        }
-        if (error.getErrorDetail().equals(ANConstants.RESPONSE_FROM_SERVER_ERROR)) {
-            getMvpView().onToastFail(R.string.server_error);
-            return;
-        }
+    public void handleApiError(String msg) {
+        AppLogger.e(TAG, msg);
+        getMvpView().onToastFail(msg);
     }
 
     @Override
@@ -120,8 +99,11 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     /**
      * 获得处理异常统一方法,基类处理，如有特殊需求，需要对非正常异常情况进行处理，请单独重写
+     *
+     * @param isClick 是否显示消息为 xxx 点击重试
+     * @return consumer
      */
-    public Consumer getConsumer() {
+    public Consumer getConsumer(final boolean isClick) {
         return new Consumer<Throwable>() {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
@@ -132,10 +114,7 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
                 getMvpView().hideErrorLayout();
                 getMvpView().hideLoading();
                 getMvpView().hideProgressLoadingDialog();
-                if (throwable instanceof ANError) {
-                    ANError anError = (ANError) throwable;
-                    handleApiError(anError);
-                }
+                handleApiError(ExceptionHandle.handleException(throwable, isClick).message);
             }
         };
     }
@@ -143,7 +122,7 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     /**
      * 针对不吐司，只显示异常消息的情况
      */
-    public Consumer otherConsumer() {
+    public Consumer otherConsumer(final boolean isClick) {
         return new Consumer<Throwable>() {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
@@ -154,36 +133,12 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
                 getMvpView().hideErrorLayout();
                 getMvpView().hideLoading();
                 getMvpView().hideProgressLoadingDialog();
-                if (throwable instanceof ANError) {
-                    ANError error = (ANError) throwable;
-                    if (error == null || error.getErrorBody() == null) {
-                        if (NetworkUtils.isNetworkConnected(MyApp.getInstance())) {
-                            getErrorMsg(R.string.server_error);
-                        } else {
-                            getErrorMsg(R.string.network_error);
-                        }
-                        return;
-                    }
-                    AppLogger.e(TAG, "请求失败：" + error.toString());
-                    if (error.getErrorDetail().equals(ANConstants.CONNECTION_ERROR)) {
-                        getErrorMsg(R.string.network_error);
-                        return;
-                    }
-
-                    if (error.getErrorDetail().equals(ANConstants.REQUEST_CANCELLED_ERROR)) {
-                        getErrorMsg(R.string.retry);
-                        return;
-                    }
-                    if (error.getErrorDetail().equals(ANConstants.RESPONSE_FROM_SERVER_ERROR)) {
-                        getErrorMsg(R.string.server_error);
-                        return;
-                    }
-                }
+                getErrorMsg(ExceptionHandle.handleException(throwable, isClick).message);
             }
         };
     }
 
-    public void getErrorMsg(@StringRes int msg) {
+    public void getErrorMsg(String msg) {
 
     }
 

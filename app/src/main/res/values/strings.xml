@@ -7,17 +7,37 @@
     <string name="commit">确定</string>
     <string name="setting">设置</string>
     <string name="network_error">网络连接失败，请检查您的网络</string>
+    <string name="try_network_error">网络连接失败，点击重试</string>
+    <string name="network_unknown_error">网络异常，请检查您的网络</string>
+    <string name="try_network_unknown_error">网络异常，点击重试</string>
     <string name="some_error">出错啦，请稍后重试!</string>
     <string name="server_error">服务器异常，请稍后重试</string>
+    <string name="try_server_error">服务器异常，点击重试</string>
+    <string name="resolve_error">解析错误，请稍后重试</string>
+    <string name="try_resolve_error">解析错误，点击重试</string>
+    <string name="connet_error">连接失败，请稍后重试</string>
+    <string name="try_connet_error">连接失败，点击重试</string>
+    <string name="ssl_error">证书验证失败，请稍后重试</string>
+    <string name="try_ssl_error">证书验证失败，点击重试</string>
+    <string name="connet_time_out_error">连接超时，请稍后重试</string>
+    <string name="try_connet_time_out_error">连接超时，点击重试</string>
+    <string name="unknown_error">未知错误，请稍后重试</string>
+    <string name="try_unknown_error">未知错误，点击重试</string>
     <string name="retry">请重试</string>
     <string name="try_one_exit">再按一次返回键退出程序</string>
+    <string name="loading">客官请骚等，正在努力加载中&#8230;</string>
+    <string name="empty_data">Oooops&#8230;没有更多数据了</string>
+    <string name="hour">小时</string>
+    <string name="minute">分钟</string>
+    <string name="second">秒</string>
+    <string name="details">详情</string>
     <!--登录-->
     <string name="login">登录</string>
     <string name="tv_account">账号</string>
     <string name="tv_psd">密码</string>
     <string name="tv_forgetpsd">忘记密码</string>
     <string name="tv_register">新用户？点击这里注册</string>
-    <string name="login_loading">正在登录，请稍后...</string>
+    <string name="login_loading">正在登录，请稍后&#8230;</string>
     <string name="username_not_null">用户名不能为空</string>
     <string name="password_not_null">密码不能为空</string>
     <string name="user_password_not_null_six">用户名和密码长度不能少于六位</string>
@@ -27,9 +47,12 @@
     <string name="password_again">再次输入密码</string>
     <string name="has_login">已有账号？点击这里登录</string>
     <string name="disaccord">两次输入不一致</string>
-    <string name="register_loading">正在注册，请稍后...</string>
+    <string name="register_loading">正在注册，请稍后&#8230;</string>
     <!--首页-->
     <string name="home">首页</string>
+    <string name="collection_success">收藏成功</string>
+    <string name="uncollection">取消收藏</string>
+    <string name="go_login">请先登录哦~</string>
     <!--项目-->
     <string name="project">项目</string>
     <!--知识体系-->

@@ -1,7 +1,5 @@
 package com.jzh.wanandroid.entity.login;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.jzh.wanandroid.entity.base.BaseResponse;
 
 import java.util.List;
@@ -19,8 +17,6 @@ public class LoginResponse extends BaseResponse {
     /**
      * data : {"collectIds":[],"email":"","icon":"","id":9206,"password":"yzy0607","token":"","type":0,"username":"13479697150"}
      */
-    @Expose
-    @SerializedName("data")
     private DataBean data;
 
     public DataBean getData() {
@@ -43,29 +39,13 @@ public class LoginResponse extends BaseResponse {
          * username :
          */
 
-        @Expose
-        @SerializedName("email")
         private String email;
-        @Expose
-        @SerializedName("icon")
         private String icon;
-        @Expose
-        @SerializedName("id")
         private Integer id;
-        @Expose
-        @SerializedName("password")
         private String password;
-        @Expose
-        @SerializedName("token")
         private String token;
-        @Expose
-        @SerializedName("type")
         private Integer type;
-        @Expose
-        @SerializedName("username")
         private String username;
-        @Expose
-        @SerializedName("collectIds")
         private List<Integer> collectIds;
 
         public String getEmail() {

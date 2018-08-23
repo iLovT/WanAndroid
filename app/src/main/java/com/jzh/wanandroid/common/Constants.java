@@ -1,7 +1,12 @@
 package com.jzh.wanandroid.common;
 
+import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @author jzh
+ * author:jzh
  * desc:常量类
  * Date:2018/08/16 10:00
  * Email:jzh970611@163.com
@@ -11,4 +16,5 @@ package com.jzh.wanandroid.common;
 public class Constants {
     public static final String DB_NAME = "wanandroid.db";
     public static final String PREF_NAME = "wanandroid_pref";
+    public static List<ProjectTypeResponseData> PROJECT_TYPE_RESPONSE_DATAS = new ArrayList<>();
 }

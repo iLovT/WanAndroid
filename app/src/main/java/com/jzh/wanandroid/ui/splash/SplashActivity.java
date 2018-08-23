@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import com.jzh.wanandroid.R;
 import com.jzh.wanandroid.ui.base.BaseActivity;
 import com.jzh.wanandroid.ui.login.LoginActivity;
+import com.jzh.wanandroid.ui.main.MainActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,7 +56,7 @@ public class SplashActivity extends BaseActivity {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                goActivity(LoginActivity.class);
+                goActivity(MainActivity.class);
                 finish();
             }
         };

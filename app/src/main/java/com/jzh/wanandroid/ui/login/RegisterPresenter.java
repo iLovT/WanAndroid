@@ -46,7 +46,7 @@ public class RegisterPresenter<v extends RegisterMvpView> extends BasePresenter<
                                     getMvpView().onToastFail("" + registerResponse.getErrorMsg());
                                 }
                             }
-                        }, getConsumer()));
+                        }, getConsumer(false)));
     }
 
     @Override
@@ -65,6 +65,6 @@ public class RegisterPresenter<v extends RegisterMvpView> extends BasePresenter<
                                     getMvpView().onToastFail("" + response.getErrorMsg());
                                 }
                             }
-                        }, getConsumer()));
+                        }, getConsumer(false)));
     }
 }
