@@ -1,26 +1,22 @@
 package com.jzh.wanandroid.ui.project;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
-import com.jzh.wanandroid.common.Constants;
+import com.jzh.wanandroid.adapter.ProjectIndicatorAdapter;
+import com.jzh.wanandroid.adapter.ProjectPageAdapter;
 import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.ui.base.BaseFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,6 +40,7 @@ public class ProjectFragment extends BaseFragment implements ProjectMvpView {
     @BindView(R.id.fragment_project_view_pager)
     ViewPager viewPager;
     private List<ProjectTypeResponseData> datas;
+    private List<ProjectListFragment> fragmentDatas;
 
     @Override
     protected int getLayoutId() {
@@ -56,6 +53,7 @@ public class ProjectFragment extends BaseFragment implements ProjectMvpView {
         mPresenter.onAttach(this);
         setUnBinder(ButterKnife.bind(this, view));
         setHeadVisibility(View.GONE);
+        fragmentDatas = new ArrayList<>();
         datas = MyApp.getInstance().mDataManager.getProjectTypeData();
         if (datas == null || datas.size() <= 0) {
             showLoading(getString(R.string.loading));
@@ -65,42 +63,22 @@ public class ProjectFragment extends BaseFragment implements ProjectMvpView {
         }
     }
 
+
     private void initIndicator() {
-        magicIndicator.setBackgroundColor(Color.parseColor("#d43d3d"));
+        magicIndicator.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.indicator_background_color));
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
-        commonNavigator.setSkimOver(true);
-        int padding = UIUtil.getScreenWidth(getActivity()) / 2;
-        commonNavigator.setRightPadding(padding);
-        commonNavigator.setLeftPadding(padding);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-
-            @Override
-            public int getCount() {
-                return datas == null ? 0 : datas.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-                clipPagerTitleView.setText(datas.get(index).getName());
-                clipPagerTitleView.setTextColor(Color.parseColor("#f2c4c4"));
-                clipPagerTitleView.setClipColor(Color.WHITE);
-                clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        viewPager.setCurrentItem(index);
-                    }
-                });
-                return clipPagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                return null;
-            }
-        });
+        commonNavigator.setAdapter(new ProjectIndicatorAdapter(datas, viewPager));
         magicIndicator.setNavigator(commonNavigator);
         ViewPagerHelper.bind(magicIndicator, viewPager);
+        initViewpager();
+    }
+
+    private void initViewpager() {
+        for (int i = 0; i < datas.size(); i++) {
+            ProjectListFragment fragment = ProjectListFragment.getInstance(datas.get(i).getId());
+            fragmentDatas.add(fragment);
+        }
+        viewPager.setAdapter(new ProjectPageAdapter(getChildFragmentManager(), fragmentDatas));
     }
 
     @Override

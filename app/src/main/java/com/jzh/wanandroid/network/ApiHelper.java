@@ -6,6 +6,7 @@ import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
 import io.reactivex.Observable;
@@ -74,4 +75,14 @@ public interface ApiHelper {
      * @return projectresponse
      */
     Observable<ProjectTypeResponse> doGetProjectTypeApiCall();
+
+    /**
+     * 获取项目列表数据
+     *
+     * @param cid    id
+     * @param offset 页码
+     * @return projectList response
+     */
+    Observable<ProjectListResponse> doGetProjectListApiCall(Integer cid, int offset);
+
 }

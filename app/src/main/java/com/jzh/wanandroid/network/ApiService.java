@@ -5,6 +5,7 @@ import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
 import io.reactivex.Observable;
@@ -13,6 +14,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * author:jzh
@@ -61,4 +63,7 @@ public interface ApiService {
 
     @GET("project/tree/json")
     Observable<ProjectTypeResponse> doGetProjectTypeCall();
+
+    @GET("project/list/{offset}/json")
+    Observable<ProjectListResponse> doGetProjectListCall(@Path("offset") int offset, @Query("cid") Integer cid);
 }

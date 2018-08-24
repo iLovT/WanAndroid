@@ -13,4 +13,8 @@
     <color name="app_color">#18010B</color>
     <color name="tab_normal_color">#a3a3a3</color>
     <color name="tab_selected_color">#47bafc</color>
+    <color name="indicator_select_color">#E29175</color>
+    <color name="indicator_normal_color">#9A9698</color>
+    <color name="indicator_background_color">#FAFAFA</color>
+    <color name="text_vice_color">#525252</color>
 </resources>

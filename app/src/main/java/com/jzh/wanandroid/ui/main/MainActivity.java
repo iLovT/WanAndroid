@@ -8,7 +8,6 @@ import com.chaychan.library.BottomBarItem;
 import com.chaychan.library.BottomBarLayout;
 import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
-import com.jzh.wanandroid.common.Constants;
 import com.jzh.wanandroid.ui.base.BaseActivity;
 import com.jzh.wanandroid.ui.home.HomeFragment;
 import com.jzh.wanandroid.ui.knowledge.KnowledgeFragment;
@@ -110,9 +109,4 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     }
 
-
-    @Override
-    public void onGetProjectTypeSucc() {
-        Constants.PROJECT_TYPE_RESPONSE_DATAS = MyApp.getInstance().mDataManager.getProjectTypeData();
-    }
 }

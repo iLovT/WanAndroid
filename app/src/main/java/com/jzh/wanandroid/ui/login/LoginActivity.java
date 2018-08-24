@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.ui.base.BaseActivity;
@@ -42,7 +41,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
     ImageView pwdVisible;
     @BindView(R.id.iv_login)
     Button ivLogin;
-    private long exitTime = 0;
     @Inject
     LoginPresenter<LoginMvpView> mPresenter;
     private boolean isVisible = true;
@@ -158,21 +156,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
         }
     }
 
-    /**
-     * 双击退出
-     */
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == android.view.KeyEvent.KEYCODE_BACK && event.getAction() == android.view.KeyEvent.ACTION_DOWN) {
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                onToastInfo(R.string.try_one_exit);
-                exitTime = System.currentTimeMillis();
-            } else {
-                MyApp.getInstance().exit();
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     private String getUsername() {
         return username.getText().toString().trim();

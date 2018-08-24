@@ -12,6 +12,7 @@ import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.network.ApiHelper;
 
@@ -98,6 +99,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ProjectTypeResponse> doGetProjectTypeApiCall() {
         return mApiHelper.doGetProjectTypeApiCall();
+    }
+
+    @Override
+    public Observable<ProjectListResponse> doGetProjectListApiCall(Integer cid, int offset) {
+        return mApiHelper.doGetProjectListApiCall(cid, offset);
     }
 
     @Override

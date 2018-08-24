@@ -5,6 +5,7 @@ import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
 import javax.inject.Inject;
@@ -63,5 +64,10 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<ProjectTypeResponse> doGetProjectTypeApiCall() {
         return retrofit.create(ApiService.class).doGetProjectTypeCall();
+    }
+
+    @Override
+    public Observable<ProjectListResponse> doGetProjectListApiCall(Integer cid, int offset) {
+        return retrofit.create(ApiService.class).doGetProjectListCall(offset, cid);
     }
 }

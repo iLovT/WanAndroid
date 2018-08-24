@@ -44,7 +44,6 @@ public class MainPresenter<v extends MainMvpView> extends BasePresenter<v> imple
                 }).subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        getMvpView().onGetProjectTypeSucc();
                     }
                 }, otherConsumer(false)));
     }

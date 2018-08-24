@@ -12,7 +12,6 @@ import com.jzh.wanandroid.ui.base.MvpView;
  */
 
 public interface MainMvpView extends MvpView {
-    void onGetProjectTypeSucc();
 
 
     interface MainMvpPresenter<v extends MainMvpView> extends MvpPresenter<v> {

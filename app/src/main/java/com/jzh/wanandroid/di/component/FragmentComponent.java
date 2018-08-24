@@ -4,6 +4,7 @@ import com.jzh.wanandroid.di.PerFragment;
 import com.jzh.wanandroid.di.module.FragmentModule;
 import com.jzh.wanandroid.ui.home.HomeFragment;
 import com.jzh.wanandroid.ui.project.ProjectFragment;
+import com.jzh.wanandroid.ui.project.ProjectListFragment;
 
 import dagger.Component;
 
@@ -20,4 +21,6 @@ public interface FragmentComponent {
     void inject(HomeFragment homeFragment);
 
     void inject(ProjectFragment projectFragment);
+
+    void inject(ProjectListFragment projectListFragment);
 }
