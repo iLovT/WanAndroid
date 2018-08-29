@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/adapter_navigation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textColor="@color/title_red_color"
+        android:textSize="@dimen/sp_16"
+        tools:text="常用网站" />
+
+    <com.jzh.wanandroid.widget.TagContainerLayout
+        android:id="@+id/adapter_navigation_taglayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
+        app:container_background_color="@color/white"
+        app:container_enable_drag="true"
+        app:horizontal_interval="10dp"
+        app:tag_clickable="true"
+        app:tag_theme="random"
+        app:vertical_interval="10dp" />
+</LinearLayout>

@@ -3,8 +3,10 @@ package com.jzh.wanandroid.network;
 import com.jzh.wanandroid.entity.home.ArticleResponse;
 import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
+import com.jzh.wanandroid.entity.knowledge.KnowledgeResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
@@ -69,5 +71,20 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<ProjectListResponse> doGetProjectListApiCall(Integer cid, int offset) {
         return retrofit.create(ApiService.class).doGetProjectListCall(offset, cid);
+    }
+
+    @Override
+    public Observable<KnowledgeResponse> doGetKnowledgeApiCall() {
+        return retrofit.create(ApiService.class).doGetKnowledgeCall();
+    }
+
+    @Override
+    public Observable<ArticleResponse> doGetKnowledgeListApiCall(int offset, Integer cid) {
+        return retrofit.create(ApiService.class).doGetKnowledgeListCall(offset, cid);
+    }
+
+    @Override
+    public Observable<NavigationResponse> doGetNavigationApiCall() {
+        return retrofit.create(ApiService.class).doGetNavigationCall();
     }
 }

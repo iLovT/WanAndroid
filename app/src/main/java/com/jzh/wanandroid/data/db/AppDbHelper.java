@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteException;
 
 import com.jzh.wanandroid.data.db.model.DaoMaster;
 import com.jzh.wanandroid.data.db.model.DaoSession;
+import com.jzh.wanandroid.data.db.model.KnowledgeResponseData;
+import com.jzh.wanandroid.data.db.model.NavigationResponseData;
 import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
 
 import java.util.List;
@@ -59,4 +61,55 @@ public class AppDbHelper implements DbHelper {
             return null;
         }
     }
+
+    @Override
+    public Observable<Boolean> saveKnowledgeData(final List<KnowledgeResponseData> datas) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (null != datas && datas.size() > 0) {
+                    //先清空之前的数据再插入，防止数据重复
+                    mDaoSession.getKnowledgeResponseDataDao().deleteAll();
+                    mDaoSession.getKnowledgeResponseDataDao().insertOrReplaceInTx(datas);
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public List<KnowledgeResponseData> getKnowledgeData() {
+        try {
+            return mDaoSession.getKnowledgeResponseDataDao().queryBuilder()
+                    .list();
+        } catch (SQLiteException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Observable<Boolean> saveNavigationData(final List<NavigationResponseData> datas) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (null != datas && datas.size() > 0) {
+                    //先清空之前的数据再插入，防止数据重复
+                    mDaoSession.getNavigationResponseDataDao().deleteAll();
+                    mDaoSession.getNavigationResponseDataDao().insertOrReplaceInTx(datas);
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public List<NavigationResponseData> getNavigationData() {
+        try {
+            return mDaoSession.getNavigationResponseDataDao().queryBuilder()
+                    .list();
+        } catch (SQLiteException e) {
+            return null;
+        }
+    }
+
 }

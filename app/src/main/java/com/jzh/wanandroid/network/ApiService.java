@@ -3,8 +3,10 @@ package com.jzh.wanandroid.network;
 import com.jzh.wanandroid.entity.home.ArticleResponse;
 import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
+import com.jzh.wanandroid.entity.knowledge.KnowledgeResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
@@ -66,4 +68,13 @@ public interface ApiService {
 
     @GET("project/list/{offset}/json")
     Observable<ProjectListResponse> doGetProjectListCall(@Path("offset") int offset, @Query("cid") Integer cid);
+
+    @GET("tree/json")
+    Observable<KnowledgeResponse> doGetKnowledgeCall();
+
+    @GET("article/list/{offset}/json")
+    Observable<ArticleResponse> doGetKnowledgeListCall(@Path("offset") int offset, @Query("cid") Integer cid);
+
+    @GET("navi/json")
+    Observable<NavigationResponse> doGetNavigationCall();
 }

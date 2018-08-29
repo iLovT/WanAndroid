@@ -4,8 +4,10 @@ package com.jzh.wanandroid.network;
 import com.jzh.wanandroid.entity.home.ArticleResponse;
 import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
+import com.jzh.wanandroid.entity.knowledge.KnowledgeResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 
@@ -85,4 +87,26 @@ public interface ApiHelper {
      */
     Observable<ProjectListResponse> doGetProjectListApiCall(Integer cid, int offset);
 
+    /**
+     * 获取知识体系数据
+     *
+     * @return datas
+     */
+    Observable<KnowledgeResponse> doGetKnowledgeApiCall();
+
+    /**
+     * 获取知识体系文章数据
+     *
+     * @param offset 页码
+     * @param cid    cid
+     * @return project response
+     */
+    Observable<ArticleResponse> doGetKnowledgeListApiCall(int offset, Integer cid);
+
+    /**
+     * 获取导航数据
+     *
+     * @return datas
+     */
+    Observable<NavigationResponse> doGetNavigationApiCall();
 }

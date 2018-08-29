@@ -34,7 +34,6 @@ import com.jzh.wanandroid.di.component.DaggerFragmentComponent;
 import com.jzh.wanandroid.di.component.FragmentComponent;
 import com.jzh.wanandroid.di.module.FragmentModule;
 import com.jzh.wanandroid.listener.OnMultiClickListener;
-import com.jzh.wanandroid.utils.AppLogger;
 import com.jzh.wanandroid.utils.CommonUtils;
 import com.jzh.wanandroid.utils.NetworkUtils;
 import com.jzh.wanandroid.utils.ScreenSwitch;

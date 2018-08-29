@@ -205,11 +205,11 @@ public class ProjectListFragment extends BaseFragment implements ProjectListMvpV
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        offset++;
         if (isOver) {
             refreshLayout.finishLoadMoreWithNoMoreData();
             return;
         }
+        offset++;
         mPresenter.doGetProjectListCall(cid, offset, false);
     }
 

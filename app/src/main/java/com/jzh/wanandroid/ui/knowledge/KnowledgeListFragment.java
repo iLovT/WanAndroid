@@ -1,4 +1,4 @@
-package com.jzh.wanandroid.ui.home;
+package com.jzh.wanandroid.ui.knowledge;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,24 +6,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
-import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
 import com.jzh.wanandroid.adapter.ArticleAdapter;
+import com.jzh.wanandroid.common.Constants;
 import com.jzh.wanandroid.entity.home.ArticleResponse;
-import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.ui.base.BaseFragment;
 import com.jzh.wanandroid.ui.login.LoginActivity;
 import com.jzh.wanandroid.ui.webview.MyWebView;
-import com.jzh.wanandroid.utils.MeasureUtils;
 import com.jzh.wanandroid.widget.GoodView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -42,33 +36,31 @@ import butterknife.OnClick;
 
 /**
  * author:jzh
- * desc:首页
- * Date:2018/08/20 14:35
+ * desc:
+ * Date:2018/08/27 17:12
  * Email:jzh970611@163.com
  * Github:https://github.com/iLovT
  */
 
-public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefreshListener, OnLoadMoreListener, BaseQuickAdapter.OnItemChildClickListener, OnItemClickListener, BaseQuickAdapter.OnItemClickListener {
-    ConvenientBanner banner;
-    @BindView(R.id.fragment_home_recycler)
+public class KnowledgeListFragment extends BaseFragment implements KnowledgeListMvpView, OnRefreshListener, BaseQuickAdapter.OnItemChildClickListener, OnLoadMoreListener, BaseQuickAdapter.OnItemClickListener {
+    @BindView(R.id.fragment_knowledge_list_recycler)
     RecyclerView mRecycler;
-    @BindView(R.id.fragment_home_refresh)
+    @BindView(R.id.fragment_knowledge_list_refresh)
     SmartRefreshLayout mRefresh;
-    @BindView(R.id.fragment_home_to_top)
+    @BindView(R.id.fragment_knowledge_list_to_top)
     ImageView toTop;
+    private int cid;
     @Inject
-    HomePresenter<HomeMvpView> mPresenter;
-    private List<String> bannerDatas;
+    KnowledgeListPresenter<KnowledgeListMvpView> mPresenter;
     private int offset = 0;
     private View mView;
     private ArticleAdapter adapter;
     private boolean isOver = false;
     private GoodView goodView;
-    private BannerResponse bannerResponse;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_knowledge_list;
     }
 
     @Override
@@ -77,32 +69,21 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
         mPresenter.onAttach(this);
         setUnBinder(ButterKnife.bind(this, view));
         setHeadVisibility(View.GONE);
-        bannerDatas = new ArrayList<>();
+        cid = getArguments().getInt(Constants.CID_KEY);
         showLoading(getString(R.string.loading));
         mView = View.inflate(getActivity(), R.layout.base_network_error, null);
         TextView tv = mView.findViewById(R.id.base_error_tv);
         tv.setText(getString(R.string.empty_data));
         goodView = new GoodView(getActivity());
-        setBannerParams();
         setRecyclerParams();
         setRreshParams();
-        mPresenter.doGetBannerCall();
         offset = 0;
-        mPresenter.doGetArticleCall(offset, true);
-    }
-
-    private void setBannerParams() {
-        banner = new ConvenientBanner(getActivity());
-        banner.setCanLoop(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dip2px(getActivity(), 180));
-        banner.setLayoutParams(params);
-        banner.setOnItemClickListener(this);
+        mPresenter.doGetKnowledgeListCall(offset, cid, true);
     }
 
     private void setRecyclerParams() {
         List<ArticleResponse.DataBean.DatasBean> dataBeanList = new ArrayList<>();
         adapter = new ArticleAdapter(dataBeanList);
-        adapter.addHeaderView(banner);
         adapter.openLoadAnimation();
         adapter.setOnItemClickListener(this);
         adapter.setOnItemChildClickListener(this);
@@ -139,9 +120,16 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
         super.getErrorViewClick();
         hideErrorLayout();
         showLoading(getString(R.string.loading));
-        mPresenter.doGetBannerCall();
         offset = 0;
-        mPresenter.doGetArticleCall(offset, true);
+        mPresenter.doGetKnowledgeListCall(offset, cid, true);
+    }
+
+    public static KnowledgeListFragment getInstance(Integer id) {
+        KnowledgeListFragment knowledgeListFragment = new KnowledgeListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.CID_KEY, id);
+        knowledgeListFragment.setArguments(bundle);
+        return knowledgeListFragment;
     }
 
     @Override
@@ -150,27 +138,7 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
     }
 
     @Override
-    public void onSucc(BannerResponse response) {
-        bannerResponse = response;
-        if (bannerDatas != null) {
-            bannerDatas.clear();
-            for (int i = 0; i < response.getData().size(); i++) {
-                bannerDatas.add(response.getData().get(i).getImagePath());
-            }
-        }
-        banner.setPages(new CBViewHolderCreator() {
-            @Override
-            public BannerHolderView createHolder() {
-                return new BannerHolderView();
-            }
-        }, bannerDatas)
-                .setPageIndicator(new int[]{R.drawable.kuang_corners_white_five, R.drawable.kuang_corners_red_dian_five})
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL).setScrollDuration(2500);
-        banner.startTurning(4000);
-    }
-
-    @Override
-    public void onGetArticleSucc(ArticleResponse response) {
+    public void onGetKnowledgeListSucc(ArticleResponse response) {
         mRefresh.setEnableRefresh(true);
         isOver = response.getData().isOver();
         adapter.addData(response.getData().getDatas());
@@ -201,9 +169,6 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
         }
     }
 
-    /**
-     * 收藏成功
-     */
     @Override
     public void onCollectionSucc(View view, int position) {
         if (view == null) {
@@ -216,9 +181,6 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
         goodView.show(view);
     }
 
-    /**
-     * 取消收藏成功
-     */
     @Override
     public void onUnCollectionSucc(View view, int position) {
         if (view == null) {
@@ -238,24 +200,27 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
             return;
         }
         offset++;
-        mPresenter.doGetArticleCall(offset, false);
+        mPresenter.doGetKnowledgeListCall(offset, cid, false);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         offset = 0;
         refreshLayout.setNoMoreData(false);
-        mPresenter.doGetBannerCall();
-        mPresenter.doGetArticleCall(offset, false);
+        mPresenter.doGetKnowledgeListCall(offset, cid, false);
     }
 
-    /**
-     * banner item child click
-     *
-     * @param adapter  adapter
-     * @param view     view
-     * @param position position
-     */
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        if (this.adapter == null || this.adapter.getData().size() <= 0) {
+            onToastWarn(R.string.unknown_error);
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString(MyWebView.REQUEST_WEBVIEW_URL_KEY, TextUtils.isEmpty(this.adapter.getData().get(position).getLink()) ? "" : this.adapter.getData().get(position).getLink());
+        goActivity(MyWebView.class, bundle);
+    }
+
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
@@ -277,42 +242,7 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
         }
     }
 
-    /**
-     * banner item  click
-     *
-     * @param position position
-     */
-    @Override
-    public void onItemClick(int position) {
-        if (bannerResponse == null || bannerResponse.getData() == null) {
-            onToastWarn(R.string.unknown_error);
-            return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString(MyWebView.REQUEST_WEBVIEW_URL_KEY, TextUtils.isEmpty(bannerResponse.getData().get(position).getUrl()) ? "" : bannerResponse.getData().get(position).getUrl());
-        goActivity(MyWebView.class, bundle);
-    }
-
-    /**
-     * adapter item click
-     *
-     * @param adapter  adapter
-     * @param view     view
-     * @param position position
-     */
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        if (this.adapter == null || this.adapter.getData().size() <= 0) {
-            onToastWarn(R.string.unknown_error);
-            return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString(MyWebView.REQUEST_WEBVIEW_URL_KEY, TextUtils.isEmpty(this.adapter.getData().get(position).getLink()) ? "" : this.adapter.getData().get(position).getLink());
-        goActivity(MyWebView.class, bundle);
-    }
-
-
-    @OnClick(R.id.fragment_home_to_top)
+    @OnClick(R.id.fragment_knowledge_list_to_top)
     public void onViewClicked() {
         if (mRecycler == null) {
             return;

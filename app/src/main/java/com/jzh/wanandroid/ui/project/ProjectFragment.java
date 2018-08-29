@@ -39,7 +39,7 @@ public class ProjectFragment extends BaseFragment implements ProjectMvpView {
     MagicIndicator magicIndicator;
     @BindView(R.id.fragment_project_view_pager)
     ViewPager viewPager;
-    private List<ProjectTypeResponseData> datas;
+    private List<ProjectTypeResponseData> datas = new ArrayList<>();
     private List<ProjectListFragment> fragmentDatas;
 
     @Override

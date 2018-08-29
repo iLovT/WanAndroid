@@ -19,5 +19,15 @@ public interface MainMvpView extends MvpView {
          * 获取项目分类
          */
         void doGetProjectType();
+
+        /**
+         * 获取知识体系数据
+         */
+        void doGetKnowledgeCall();
+
+        /**
+         * 获取导航数据
+         */
+        void doGetNavigationCall();
     }
 }

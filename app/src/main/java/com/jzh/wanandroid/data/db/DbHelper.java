@@ -1,6 +1,8 @@
 package com.jzh.wanandroid.data.db;
 
 
+import com.jzh.wanandroid.data.db.model.KnowledgeResponseData;
+import com.jzh.wanandroid.data.db.model.NavigationResponseData;
 import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
 
 import java.util.List;
@@ -28,4 +30,34 @@ public interface DbHelper {
      * @return datas
      */
     List<ProjectTypeResponseData> getProjectTypeData();
+
+    /**
+     * 保存知识体系数据
+     *
+     * @param datas datas
+     * @return Boolean
+     */
+    Observable<Boolean> saveKnowledgeData(List<KnowledgeResponseData> datas);
+
+    /**
+     * @return datas
+     */
+    List<KnowledgeResponseData> getKnowledgeData();
+
+    /**
+     * 保存导航数据
+     *
+     * @param datas datas
+     * @return boolean
+     */
+    Observable<Boolean> saveNavigationData(List<NavigationResponseData> datas);
+
+    /**
+     * 获取导航数据
+     *
+     * @return datas
+     */
+    List<NavigationResponseData> getNavigationData();
+
+
 }

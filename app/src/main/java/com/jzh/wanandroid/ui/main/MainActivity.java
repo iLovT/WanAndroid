@@ -51,6 +51,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         initImmersionBar();
         showFragment(R.id.fl, new HomeFragment());
         mPresenter.doGetProjectType();
+        mPresenter.doGetKnowledgeCall();
+        mPresenter.doGetNavigationCall();
     }
 
     @Override

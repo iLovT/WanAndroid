@@ -1,6 +1,8 @@
 package com.jzh.wanandroid.ui.main;
 
 import com.jzh.wanandroid.data.DataManager;
+import com.jzh.wanandroid.entity.knowledge.KnowledgeResponse;
+import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.ui.base.BasePresenter;
 
@@ -38,6 +40,46 @@ public class MainPresenter<v extends MainMvpView> extends BasePresenter<v> imple
                     public ObservableSource<?> apply(@NonNull ProjectTypeResponse response) throws Exception {
                         if (response.getErrorCode() >= 0) {
                             return getDataManager().saveProjectTypeData(response.getProjectTypeResponseDatas());
+                        }
+                        return null;
+                    }
+                }).subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                    }
+                }, otherConsumer(false)));
+    }
+
+    @Override
+    public void doGetKnowledgeCall() {
+        getCompositeDisposable().add(getDataManager().
+                doGetKnowledgeApiCall().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<KnowledgeResponse, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(@NonNull KnowledgeResponse response) throws Exception {
+                        if (response.getErrorCode() >= 0) {
+                            return getDataManager().saveKnowledgeData(response.getDatas());
+                        }
+                        return null;
+                    }
+                }).subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                    }
+                }, otherConsumer(false)));
+    }
+
+    @Override
+    public void doGetNavigationCall() {
+        getCompositeDisposable().add(getDataManager().doGetNavigationApiCall()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<NavigationResponse, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(@NonNull NavigationResponse response) throws Exception {
+                        if (response.getErrorCode() >= 0) {
+                            return getDataManager().saveNavigationData(response.getData());
                         }
                         return null;
                     }

@@ -63,4 +63,5 @@ ext {
     jsoupVersion = '1.11.3'
     BigImageViewPagerVersion = 'v4_1.2.3'
     magicIndicatorVersion = '1.5.0'
+    verticalTabLayoutVersion = '1.2.5'
 }

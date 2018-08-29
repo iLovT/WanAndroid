@@ -3,6 +3,9 @@ package com.jzh.wanandroid.di.component;
 import com.jzh.wanandroid.di.PerFragment;
 import com.jzh.wanandroid.di.module.FragmentModule;
 import com.jzh.wanandroid.ui.home.HomeFragment;
+import com.jzh.wanandroid.ui.knowledge.KnowledgeFragment;
+import com.jzh.wanandroid.ui.knowledge.KnowledgeListFragment;
+import com.jzh.wanandroid.ui.navigation.NavigationFragment;
 import com.jzh.wanandroid.ui.project.ProjectFragment;
 import com.jzh.wanandroid.ui.project.ProjectListFragment;
 
@@ -23,4 +26,10 @@ public interface FragmentComponent {
     void inject(ProjectFragment projectFragment);
 
     void inject(ProjectListFragment projectListFragment);
+
+    void inject(KnowledgeFragment knowledgeFragment);
+
+    void inject(KnowledgeListFragment knowledgeListFragment);
+
+    void inject(NavigationFragment navigationFragment);
 }

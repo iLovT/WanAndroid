@@ -4,14 +4,18 @@ import android.content.Context;
 
 
 import com.jzh.wanandroid.data.db.DbHelper;
+import com.jzh.wanandroid.data.db.model.KnowledgeResponseData;
+import com.jzh.wanandroid.data.db.model.NavigationResponseData;
 import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
 import com.jzh.wanandroid.data.pref.PreferencesHelper;
 import com.jzh.wanandroid.di.ApplicationContext;
 import com.jzh.wanandroid.entity.home.ArticleResponse;
 import com.jzh.wanandroid.entity.home.BannerResponse;
 import com.jzh.wanandroid.entity.home.CollectionResponse;
+import com.jzh.wanandroid.entity.knowledge.KnowledgeResponse;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.entity.login.RegisterResponse;
+import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.network.ApiHelper;
@@ -107,6 +111,21 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<KnowledgeResponse> doGetKnowledgeApiCall() {
+        return mApiHelper.doGetKnowledgeApiCall();
+    }
+
+    @Override
+    public Observable<ArticleResponse> doGetKnowledgeListApiCall(int offset, Integer cid) {
+        return mApiHelper.doGetKnowledgeListApiCall(offset, cid);
+    }
+
+    @Override
+    public Observable<NavigationResponse> doGetNavigationApiCall() {
+        return mApiHelper.doGetNavigationApiCall();
+    }
+
+    @Override
     public Observable<Boolean> saveProjectTypeData(List<ProjectTypeResponseData> datas) {
         return mDbHelper.saveProjectTypeData(datas);
     }
@@ -114,5 +133,25 @@ public class AppDataManager implements DataManager {
     @Override
     public List<ProjectTypeResponseData> getProjectTypeData() {
         return mDbHelper.getProjectTypeData();
+    }
+
+    @Override
+    public Observable<Boolean> saveKnowledgeData(List<KnowledgeResponseData> datas) {
+        return mDbHelper.saveKnowledgeData(datas);
+    }
+
+    @Override
+    public List<KnowledgeResponseData> getKnowledgeData() {
+        return mDbHelper.getKnowledgeData();
+    }
+
+    @Override
+    public Observable<Boolean> saveNavigationData(List<NavigationResponseData> datas) {
+        return mDbHelper.saveNavigationData(datas);
+    }
+
+    @Override
+    public List<NavigationResponseData> getNavigationData() {
+        return mDbHelper.getNavigationData();
     }
 }

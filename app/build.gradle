@@ -55,7 +55,7 @@ android {
 }
 //数据库版本配置
 greendao {
-    schemaVersion 3  //对应当前数据库版本
+    schemaVersion 6 //对应当前数据库版本
     daoPackage 'com.jzh.wanandroid.data.db.model'  //由GreenDao自动生成代码所在的包名，默认的是在项目包下面新建一个gen。
     targetGenDir 'src/main/java' //设置自动生成代码的目录。
 }
@@ -134,4 +134,6 @@ dependencies {
     //jsoup
     compile "org.jsoup:jsoup:$rootProject.jsoupVersion"
     compile "com.github.hackware1993:MagicIndicator:$rootProject.magicIndicatorVersion"
+    //vertical tablayout
+    compile "q.rorbin:VerticalTabLayout:$rootProject.verticalTabLayoutVersion"
 }
