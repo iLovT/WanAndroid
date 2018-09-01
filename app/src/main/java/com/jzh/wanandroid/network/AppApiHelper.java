@@ -9,6 +9,8 @@ import com.jzh.wanandroid.entity.login.RegisterResponse;
 import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
+import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoResponse;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -86,5 +88,15 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<NavigationResponse> doGetNavigationApiCall() {
         return retrofit.create(ApiService.class).doGetNavigationCall();
+    }
+
+    @Override
+    public Observable<TodoResponse> doGetTodoApiCall(int type) {
+        return retrofit.create(ApiService.class).doGetTodoListCall(type);
+    }
+
+    @Override
+    public Observable<AddTodoResponse> doAddTodoApiCall(String title, String content, String date, int type) {
+        return retrofit.create(ApiService.class).doAddTodoCall(title, content, date, type);
     }
 }

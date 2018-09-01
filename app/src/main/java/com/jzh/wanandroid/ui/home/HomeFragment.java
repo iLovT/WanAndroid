@@ -91,6 +91,22 @@ public class HomeFragment extends BaseFragment implements HomeMvpView, OnRefresh
         mPresenter.doGetArticleCall(offset, true);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (banner != null) {
+            banner.stopTurning();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (banner != null) {
+            banner.startTurning(4000);
+        }
+    }
+
     private void setBannerParams() {
         banner = new ConvenientBanner(getActivity());
         banner.setCanLoop(true);

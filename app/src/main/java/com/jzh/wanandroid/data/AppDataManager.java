@@ -7,6 +7,7 @@ import com.jzh.wanandroid.data.db.DbHelper;
 import com.jzh.wanandroid.data.db.model.KnowledgeResponseData;
 import com.jzh.wanandroid.data.db.model.NavigationResponseData;
 import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
+import com.jzh.wanandroid.data.db.model.TodoListResponseData;
 import com.jzh.wanandroid.data.pref.PreferencesHelper;
 import com.jzh.wanandroid.di.ApplicationContext;
 import com.jzh.wanandroid.entity.home.ArticleResponse;
@@ -18,6 +19,8 @@ import com.jzh.wanandroid.entity.login.RegisterResponse;
 import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
+import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoResponse;
 import com.jzh.wanandroid.network.ApiHelper;
 
 import java.util.List;
@@ -126,6 +129,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<TodoResponse> doGetTodoApiCall(int type) {
+        return mApiHelper.doGetTodoApiCall(type);
+    }
+
+    @Override
+    public Observable<AddTodoResponse> doAddTodoApiCall(String title, String content, String date, int type) {
+        return mApiHelper.doAddTodoApiCall(title, content, date, type);
+    }
+
+    @Override
     public Observable<Boolean> saveProjectTypeData(List<ProjectTypeResponseData> datas) {
         return mDbHelper.saveProjectTypeData(datas);
     }
@@ -154,4 +167,15 @@ public class AppDataManager implements DataManager {
     public List<NavigationResponseData> getNavigationData() {
         return mDbHelper.getNavigationData();
     }
+
+    @Override
+    public Observable<Boolean> saveTodoListData(TodoListResponseData datas) {
+        return mDbHelper.saveTodoListData(datas);
+    }
+
+    @Override
+    public TodoListResponseData getTodoListData() {
+        return mDbHelper.getTodoListData();
+    }
+
 }

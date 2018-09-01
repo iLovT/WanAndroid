@@ -78,7 +78,7 @@ public class NavigationListResponse implements PropertyConverter<List<Navigation
 
     @Override
     public String convertToDatabaseValue(List<NavigationListResponse> entityProperty) {
-        if (entityProperty == null) {
+        if (entityProperty == null || entityProperty.size() <= 0) {
             return null;
         }
         String response = new Gson().toJson(entityProperty);

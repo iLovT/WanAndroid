@@ -67,7 +67,7 @@ public class ProjectListFragment extends BaseFragment implements ProjectListMvpV
     public static ProjectListFragment getInstance(Integer cid) {
         ProjectListFragment fragment = new ProjectListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.CID_KEY, cid);
+        bundle.putInt(Constants.PARAMS, cid);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -80,7 +80,9 @@ public class ProjectListFragment extends BaseFragment implements ProjectListMvpV
         setHeadVisibility(View.GONE);
         goodView = new GoodView(getActivity());
         Bundle bundle = getArguments();
-        cid = bundle.getInt(Constants.CID_KEY);
+        if (bundle != null) {
+            cid = bundle.getInt(Constants.PARAMS);
+        }
         setRecyclerParams();
         setRefreshParams();
         mView = View.inflate(getActivity(), R.layout.base_network_error, null);

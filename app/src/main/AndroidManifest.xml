@@ -37,6 +37,9 @@
         <activity
             android:name=".ui.knowledge.KnowledgeDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.todo.AddTodoActivity"
+            android:screenOrientation="portrait" />
         <!--友盟集成-->
         <meta-data
             android:name="UMENG_APPKEY"

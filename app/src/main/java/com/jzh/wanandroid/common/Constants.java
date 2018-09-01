@@ -12,5 +12,6 @@ package com.jzh.wanandroid.common;
 public class Constants {
     public static final String DB_NAME = "wanandroid.db";
     public static final String PREF_NAME = "wanandroid_pref";
-    public static final String CID_KEY = "cid_key";
+    public static final String PARAMS = "params";
+
 }

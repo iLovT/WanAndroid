@@ -31,6 +31,7 @@
     <string name="minute">分钟</string>
     <string name="second">秒</string>
     <string name="details">详情</string>
+    <string name="load_more">查看更多</string>
     <!--登录-->
     <string name="login">登录</string>
     <string name="tv_account">账号</string>
@@ -61,5 +62,11 @@
     <!--导航-->
     <string name="navigation">导航</string>
     <!--代办清单-->
-    <string name="todo">代办清单</string>
+    <string name="todo">待办清单</string>
+    <string name="complte_list">已完成清单</string>
+    <string name="not_login">您还未登录哦，点击屏幕登录后即可享用更多功能哟~</string>
+    <string name="add_todo_title">输入代办名称，例如：周末请朋友搓一顿</string>
+    <string name="add_todo_content">输入代办详情，非必填，例如：\n\n1.表面请朋友，实际约妹子\n2.把酒言欢，尽显豪迈\n3.妹子沦陷，无法自拔\n4.宿舍关门，恰好带了身份证&#8230;</string>
+    <string name="todo_add">添加</string>
+    <string name="todo_add_title">添加清单</string>
 </resources>

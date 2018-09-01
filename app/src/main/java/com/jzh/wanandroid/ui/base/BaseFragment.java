@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,8 @@ import com.jzh.wanandroid.utils.toast.Toasty;
 import com.jzh.wanandroid.widget.LVCircularSmile;
 import com.jzh.wanandroid.widget.ProgressLoadingDialog;
 
+import org.greenrobot.greendao.annotation.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +65,8 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     private View view;
     private FrameLayout baseContentView;
     private Activity mActivity;
-    private LVCircularSmile loadingDialogIv;
-    private Thread popTimeThread;
+    private LVCircularSmile loadingDialogIv = null;
+    private Thread popTimeThread = null;
     public PopupWindow loadingPop;
     protected RelativeLayout headLayout;
     protected Button leftBtn;
@@ -124,10 +127,12 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mFragmentComponent = DaggerFragmentComponent.builder()
-                .fragmentModule(new FragmentModule(this))
-                .applicationComponent(((MyApp) getActivity().getApplication()).getComponent()).build();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (getActivity().getApplication() != null) {
+            mFragmentComponent = DaggerFragmentComponent.builder()
+                    .fragmentModule(new FragmentModule(this))
+                    .applicationComponent(((MyApp) getActivity().getApplication()).getComponent()).build();
+        }
         baseView = inflater.inflate(R.layout.title_base, container, false);
         initViews(baseView);
         if (getLayoutId() != 0) {
@@ -205,7 +210,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     /**
      * 检查权限
      *
-     * @param permissions
+     * @param permissions permission
      * @since 2.5.0
      */
     public void checkPermissions(String... permissions) {
@@ -226,8 +231,8 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     /**
      * 获取权限集中需要申请权限的列表
      *
-     * @param permissions
-     * @return
+     * @param permissions permission
+     * @return 权限数组
      * @since 2.5.0
      */
     private List<String> findDeniedPermissions(String[] permissions) {

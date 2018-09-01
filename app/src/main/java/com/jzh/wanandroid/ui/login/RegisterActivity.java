@@ -1,5 +1,7 @@
 package com.jzh.wanandroid.ui.login;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
 import com.jzh.wanandroid.ui.base.BaseActivity;
 import com.jzh.wanandroid.ui.main.MainActivity;
@@ -67,6 +70,7 @@ public class RegisterActivity extends BaseActivity implements TextView.OnEditorA
         super.onDestroy();
         mPresenter.onDetach();
     }
+
 
     private void initListener() {
         username.addTextChangedListener(new TextWatcher() {
@@ -207,7 +211,7 @@ public class RegisterActivity extends BaseActivity implements TextView.OnEditorA
                 mPresenter.doRegisterCall(getUserName(), getPassWord(), getAgainPassWord());
                 break;
             case R.id.tv_register:
-                goActivity(LoginActivity.class);
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
         }
@@ -243,7 +247,13 @@ public class RegisterActivity extends BaseActivity implements TextView.OnEditorA
 
     @Override
     public void onSucc() {
-        goActivity(MainActivity.class);
-        finish();
+        if (MyApp.getInstance().getAllActivities() != null && MyApp.getInstance().getAllActivities().size() > 0) {
+            finish();
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
     }
 }

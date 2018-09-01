@@ -29,7 +29,7 @@ task clean(type: Delete) {
 ext {
     compileSdkVersion = 26
     buildToolsVersion = '27.0.3'
-    minSdkVersion = 16
+    minSdkVersion = 17
     targetSdkVersion = 26
     espressoCoreVersion = '2.2.2'
     constraintLayoutVersion = '1.0.2'

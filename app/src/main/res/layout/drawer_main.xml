@@ -6,5 +6,11 @@
     android:background="@color/white"
     android:clickable="true"
     android:orientation="vertical">
-
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_40"
+    android:background="@drawable/shadow_bg"
+    android:text="退出登录"
+    android:id="@+id/login_out"
+    />
 </LinearLayout>

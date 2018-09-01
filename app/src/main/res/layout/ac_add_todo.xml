@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/ac_todo_add_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:ellipsize="end"
+        android:hint="@string/add_todo_title"
+        android:maxLines="2"
+        android:minHeight="@dimen/dp_30"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/title_bar" />
+
+    <EditText
+        android:id="@+id/ac_todo_add_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="@string/add_todo_content"
+        android:maxHeight="300dp"
+        android:minHeight="200dp"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/title_bar" />
+
+    <Button
+        android:id="@+id/ac_todo_add_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:background="@color/white"
+        android:drawablePadding="@dimen/dp_5"
+        android:drawableStart="@drawable/block"
+        android:gravity="center_vertical"
+        app:paddingStart="@dimen/dp_10" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/title_bar" />
+
+    <Button
+        android:id="@+id/ac_todo_add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_50"
+        android:background="@drawable/todo_commit_bg"
+        android:text="@string/todo_add"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
+</LinearLayout>

@@ -4,6 +4,7 @@ import com.jzh.wanandroid.data.DataManager;
 import com.jzh.wanandroid.entity.knowledge.KnowledgeResponse;
 import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
+import com.jzh.wanandroid.entity.todo.TodoResponse;
 import com.jzh.wanandroid.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -89,4 +90,25 @@ public class MainPresenter<v extends MainMvpView> extends BasePresenter<v> imple
                     }
                 }, otherConsumer(false)));
     }
+
+    @Override
+    public void doTodoListCall(int type) {
+        getCompositeDisposable().add(getDataManager().doGetTodoApiCall(type)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<TodoResponse, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(@NonNull TodoResponse response) throws Exception {
+                        if (response.getErrorCode() >= 0) {
+                            return getDataManager().saveTodoListData(response.getDataBean());
+                        }
+                        return null;
+                    }
+                }).subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                    }
+                }, otherConsumer(false)));
+    }
+
 }

@@ -8,6 +8,7 @@ import com.jzh.wanandroid.data.db.model.DaoSession;
 import com.jzh.wanandroid.data.db.model.KnowledgeResponseData;
 import com.jzh.wanandroid.data.db.model.NavigationResponseData;
 import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
+import com.jzh.wanandroid.data.db.model.TodoListResponseData;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -111,5 +112,30 @@ public class AppDbHelper implements DbHelper {
             return null;
         }
     }
+
+    @Override
+    public Observable<Boolean> saveTodoListData(final TodoListResponseData datas) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (null != datas) {
+                    //先清空之前的数据再插入，防止数据重复
+                    mDaoSession.getTodoListResponseDataDao().deleteAll();
+                    mDaoSession.getTodoListResponseDataDao().insertOrReplaceInTx(datas);
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public TodoListResponseData getTodoListData() {
+        try {
+            return mDaoSession.getTodoListResponseDataDao().queryBuilder().unique();
+        } catch (SQLiteException e) {
+            return null;
+        }
+    }
+
 
 }

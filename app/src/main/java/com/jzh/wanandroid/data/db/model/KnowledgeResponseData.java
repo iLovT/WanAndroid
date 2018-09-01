@@ -87,7 +87,7 @@ public class KnowledgeResponseData implements PropertyConverter<List<KnowledgeRe
 
     @Override
     public String convertToDatabaseValue(List<KnowledgeResponseData> entityProperty) {
-        if (entityProperty == null) {
+        if (entityProperty == null || entityProperty.size() <= 0) {
             return null;
         }
         String response = new Gson().toJson(entityProperty);

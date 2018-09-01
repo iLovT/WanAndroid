@@ -29,5 +29,7 @@ public interface MainMvpView extends MvpView {
          * 获取导航数据
          */
         void doGetNavigationCall();
+
+        void doTodoListCall(int type);
     }
 }

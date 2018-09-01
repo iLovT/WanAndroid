@@ -60,6 +60,9 @@ public class KnowledgeDetailActivity extends BaseActivity {
     private void initIndicator() {
         magicIndicator.setBackgroundColor(ContextCompat.getColor(this, R.color.indicator_background_color));
         CommonNavigator commonNavigator = new CommonNavigator(this);
+        if (datas.getDataList().size() <= 5) {
+            commonNavigator.setAdjustMode(true);
+        }
         commonNavigator.setAdapter(new KnowledgeIndicatorAdapter(datas.getDataList(), mViewpager));
         magicIndicator.setNavigator(commonNavigator);
         ViewPagerHelper.bind(magicIndicator, mViewpager);

@@ -8,6 +8,7 @@ import com.jzh.wanandroid.ui.knowledge.KnowledgeListFragment;
 import com.jzh.wanandroid.ui.navigation.NavigationFragment;
 import com.jzh.wanandroid.ui.project.ProjectFragment;
 import com.jzh.wanandroid.ui.project.ProjectListFragment;
+import com.jzh.wanandroid.ui.todo.DealtFragment;
 
 import dagger.Component;
 
@@ -32,4 +33,6 @@ public interface FragmentComponent {
     void inject(KnowledgeListFragment knowledgeListFragment);
 
     void inject(NavigationFragment navigationFragment);
+
+    void inject(DealtFragment dealtFragment);
 }

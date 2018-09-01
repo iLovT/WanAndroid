@@ -4,6 +4,7 @@ package com.jzh.wanandroid.data.db;
 import com.jzh.wanandroid.data.db.model.KnowledgeResponseData;
 import com.jzh.wanandroid.data.db.model.NavigationResponseData;
 import com.jzh.wanandroid.data.db.model.ProjectTypeResponseData;
+import com.jzh.wanandroid.data.db.model.TodoListResponseData;
 
 import java.util.List;
 
@@ -58,6 +59,21 @@ public interface DbHelper {
      * @return datas
      */
     List<NavigationResponseData> getNavigationData();
+
+    /**
+     * 保存todo数据
+     *
+     * @param datas datas
+     * @return true or false
+     */
+    Observable<Boolean> saveTodoListData(TodoListResponseData datas);
+
+    /**
+     * 获取todo数据
+     *
+     * @return datas
+     */
+    TodoListResponseData getTodoListData();
 
 
 }

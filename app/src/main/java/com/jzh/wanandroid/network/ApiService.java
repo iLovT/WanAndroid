@@ -9,6 +9,8 @@ import com.jzh.wanandroid.entity.login.RegisterResponse;
 import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
+import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -77,4 +79,11 @@ public interface ApiService {
 
     @GET("navi/json")
     Observable<NavigationResponse> doGetNavigationCall();
+
+    @GET("lg/todo/list/{type}/json")
+    Observable<TodoResponse> doGetTodoListCall(@Path("type") int type);
+
+    @FormUrlEncoded
+    @POST("lg/todo/add/json")
+    Observable<AddTodoResponse> doAddTodoCall(@Field("title") String title, @Field("content") String content, @Field("date") String date, @Field("type") int type);
 }

@@ -370,7 +370,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     /**
      * 获取权限集中需要申请权限的列表
      *
-     * @param permissions
+     * @param permissions permissions
      * @return 集合
      * @since 2.5.0
      */
@@ -523,7 +523,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     public void showErrorLayout(String msg) {
         hideErrorLayout();
         View error_view = View.inflate(this, R.layout.base_network_error, null);
-        TextView tv = (TextView) error_view.findViewById(R.id.base_error_tv);
+        TextView tv = error_view.findViewById(R.id.base_error_tv);
         tv.setText(TextUtils.isEmpty(msg) ? getString(R.string.network_error) : msg);
         contentView.addView(error_view);
         error_view.setTag(NETWORK_ERROR_TAG);

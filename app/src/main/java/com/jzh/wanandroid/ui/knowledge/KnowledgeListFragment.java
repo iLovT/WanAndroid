@@ -69,7 +69,10 @@ public class KnowledgeListFragment extends BaseFragment implements KnowledgeList
         mPresenter.onAttach(this);
         setUnBinder(ButterKnife.bind(this, view));
         setHeadVisibility(View.GONE);
-        cid = getArguments().getInt(Constants.CID_KEY);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            cid = bundle.getInt(Constants.PARAMS);
+        }
         showLoading(getString(R.string.loading));
         mView = View.inflate(getActivity(), R.layout.base_network_error, null);
         TextView tv = mView.findViewById(R.id.base_error_tv);
@@ -127,7 +130,7 @@ public class KnowledgeListFragment extends BaseFragment implements KnowledgeList
     public static KnowledgeListFragment getInstance(Integer id) {
         KnowledgeListFragment knowledgeListFragment = new KnowledgeListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.CID_KEY, id);
+        bundle.putInt(Constants.PARAMS, id);
         knowledgeListFragment.setArguments(bundle);
         return knowledgeListFragment;
     }

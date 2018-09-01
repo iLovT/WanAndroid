@@ -1,5 +1,6 @@
 package com.jzh.wanandroid.ui.login;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
 import com.jzh.wanandroid.entity.login.LoginResponse;
 import com.jzh.wanandroid.ui.base.BaseActivity;
@@ -108,7 +110,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
                     ivLogin.setBackgroundResource(R.drawable.btn_not_selector);
                     ivLogin.setEnabled(false);
                 }
-
             }
         });
         password.setOnEditorActionListener(this);
@@ -147,7 +148,8 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
                 mPresenter.doLoginCall(getUsername(), getPassword());
                 break;
             case R.id.tv_register:
-                goActivity(RegisterActivity.class);
+                startActivity(new Intent(this, RegisterActivity.class));
+                finish();
                 break;
             case R.id.tv_forgetpsd:
                 break;
@@ -188,8 +190,14 @@ public class LoginActivity extends BaseActivity implements LoginMvpView, TextVie
     @Override
     public void onSucc(LoginResponse response) {
         onToastSucc(R.string.login_succ);
-        goActivity(MainActivity.class);
-        finish();
+        if (MyApp.getInstance().getAllActivities() != null && MyApp.getInstance().getAllActivities().size() > 0) {
+            finish();
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override

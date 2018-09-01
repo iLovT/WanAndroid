@@ -161,6 +161,18 @@ public class MyApp extends Application {
     }
 
     /**
+     * 获取activity栈
+     *
+     * @return setF
+     */
+    public Set<Activity> getAllActivities() {
+        if (allActivities != null) {
+            return allActivities;
+        }
+        return null;
+    }
+
+    /**
      * 退出
      */
     public void exit() {

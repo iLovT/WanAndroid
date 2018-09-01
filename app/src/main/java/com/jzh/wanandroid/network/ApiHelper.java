@@ -10,6 +10,8 @@ import com.jzh.wanandroid.entity.login.RegisterResponse;
 import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
+import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoResponse;
 
 import io.reactivex.Observable;
 
@@ -109,4 +111,23 @@ public interface ApiHelper {
      * @return datas
      */
     Observable<NavigationResponse> doGetNavigationApiCall();
+
+    /**
+     * 获取todo列表数据
+     *
+     * @param type type
+     * @return datas
+     */
+    Observable<TodoResponse> doGetTodoApiCall(int type);
+
+    /**
+     * 添加todo数据
+     *
+     * @param title   title
+     * @param content content
+     * @param date    日期
+     * @param type    类型
+     * @return response
+     */
+    Observable<AddTodoResponse> doAddTodoApiCall(String title, String content, String date, int type);
 }

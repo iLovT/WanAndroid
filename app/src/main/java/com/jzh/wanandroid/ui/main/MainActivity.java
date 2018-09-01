@@ -8,9 +8,11 @@ import com.chaychan.library.BottomBarItem;
 import com.chaychan.library.BottomBarLayout;
 import com.jzh.wanandroid.MyApp;
 import com.jzh.wanandroid.R;
+import com.jzh.wanandroid.network.cookies.CookiesManager;
 import com.jzh.wanandroid.ui.base.BaseActivity;
 import com.jzh.wanandroid.ui.home.HomeFragment;
 import com.jzh.wanandroid.ui.knowledge.KnowledgeFragment;
+import com.jzh.wanandroid.ui.login.LoginActivity;
 import com.jzh.wanandroid.ui.navigation.NavigationFragment;
 import com.jzh.wanandroid.ui.project.ProjectFragment;
 import com.jzh.wanandroid.ui.todo.TodoFragment;
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -53,6 +56,14 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mPresenter.doGetProjectType();
         mPresenter.doGetKnowledgeCall();
         mPresenter.doGetNavigationCall();
+        if (MyApp.getInstance().mDataManager.getLoginStaus()) {
+            mPresenter.doTodoListCall(0);
+        }
+    }
+
+    @Override
+    public boolean isSupportSwipeBack() {
+        return false;
     }
 
     @Override
@@ -65,7 +76,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
      * 双击退出
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == android.view.KeyEvent.KEYCODE_BACK && event.getAction() == android.view.KeyEvent.ACTION_DOWN) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 onToastInfo(R.string.try_one_exit);
                 exitTime = System.currentTimeMillis();
@@ -76,6 +87,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     @Override
     protected void eventOnClick() {
@@ -111,4 +123,10 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     }
 
+    @OnClick(R.id.login_out)
+    public void onViewClicked() {
+        MyApp.getInstance().mDataManager.setLoginStaus(false);
+        CookiesManager.clearAllCookies();
+        goActivity(LoginActivity.class);
+    }
 }
