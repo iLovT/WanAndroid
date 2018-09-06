@@ -34,6 +34,7 @@ public class TodoFragment extends BaseFragment {
     MagicIndicator magicIndicator;
     @BindView(R.id.fragment_todo_viewpager)
     ViewPager mViewpager;
+    private DealtFragment mFragment = null;
 
     @Override
     protected int getLayoutId() {
@@ -56,7 +57,9 @@ public class TodoFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (MyApp.getInstance().mDataManager.getLoginStaus()) {
-            initIndicator();
+            if (mFragment == null) {
+                initIndicator();
+            }
         } else {
             showErrorLayout(getString(R.string.not_login));
         }
@@ -75,9 +78,11 @@ public class TodoFragment extends BaseFragment {
     }
 
     private void initViewpager() {
+        mFragment = DealtFragment.getInstance(false);
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(DealtFragment.getInstance(false));
-        fragments.add(DealtFragment.getInstance(true));
+        fragments.add(mFragment);
+        mFragment = DealtFragment.getInstance(true);
+        fragments.add(mFragment);
         mViewpager.setAdapter(new TodoPageAdapter(getChildFragmentManager(), fragments));
     }
 

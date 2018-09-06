@@ -32,6 +32,8 @@
     <string name="second">秒</string>
     <string name="details">详情</string>
     <string name="load_more">查看更多</string>
+    <string name="delete_sure">确定删除吗？</string>
+    <string name="delete_loading">删除中，请稍后&#8230;</string>
     <!--登录-->
     <string name="login">登录</string>
     <string name="tv_account">账号</string>

@@ -20,6 +20,7 @@ import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoDeleteResponse;
 import com.jzh.wanandroid.entity.todo.TodoResponse;
 import com.jzh.wanandroid.network.ApiHelper;
 
@@ -136,6 +137,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<AddTodoResponse> doAddTodoApiCall(String title, String content, String date, int type) {
         return mApiHelper.doAddTodoApiCall(title, content, date, type);
+    }
+
+    @Override
+    public Observable<TodoDeleteResponse> doDeleteTodoApiCall(Long id) {
+        return mApiHelper.doDeleteTodoApiCall(id);
     }
 
     @Override

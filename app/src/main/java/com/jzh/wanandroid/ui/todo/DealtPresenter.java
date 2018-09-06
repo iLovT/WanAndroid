@@ -1,6 +1,7 @@
 package com.jzh.wanandroid.ui.todo;
 
 import com.jzh.wanandroid.data.DataManager;
+import com.jzh.wanandroid.entity.todo.TodoDeleteResponse;
 import com.jzh.wanandroid.entity.todo.TodoResponse;
 import com.jzh.wanandroid.ui.base.BasePresenter;
 
@@ -42,6 +43,24 @@ public class DealtPresenter<v extends DealtMvpView> extends BasePresenter<v> imp
                         }
                     }
                 }, getConsumer(isClick)));
+    }
+
+    @Override
+    public void doDeleteTodoCall(Long id) {
+        getCompositeDisposable().add(
+                getDataManager().doDeleteTodoApiCall(id).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<TodoDeleteResponse>() {
+                            @Override
+                            public void accept(@NonNull TodoDeleteResponse todoDeleteResponse) throws Exception {
+                                getMvpView().hideProgressLoadingDialog();
+                                if (todoDeleteResponse.getErrorCode() >= 0) {
+                                    getMvpView().onDeleteSucc("删除成功");
+                                } else {
+                                    getMvpView().onToastFail("" + todoDeleteResponse.getErrorMsg());
+                                }
+                            }
+                        }, getConsumer(false)));
     }
 
     @Override

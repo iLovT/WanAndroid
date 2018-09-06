@@ -10,6 +10,7 @@ import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoDeleteResponse;
 import com.jzh.wanandroid.entity.todo.TodoResponse;
 
 import io.reactivex.Observable;
@@ -86,4 +87,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("lg/todo/add/json")
     Observable<AddTodoResponse> doAddTodoCall(@Field("title") String title, @Field("content") String content, @Field("date") String date, @Field("type") int type);
+
+    @POST("lg/todo/delete/{id}/json")
+    Observable<TodoDeleteResponse> doDeleteTodoCall(@Path("id") Long id);
+
 }

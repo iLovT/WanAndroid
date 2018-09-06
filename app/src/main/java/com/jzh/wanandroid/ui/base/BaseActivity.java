@@ -39,6 +39,7 @@ import com.jzh.wanandroid.di.component.ActivityComponent;
 import com.jzh.wanandroid.di.component.DaggerActivityComponent;
 import com.jzh.wanandroid.di.module.ActivityModule;
 import com.jzh.wanandroid.listener.OnMultiClickListener;
+import com.jzh.wanandroid.utils.AppLogger;
 import com.jzh.wanandroid.utils.CommonUtils;
 import com.jzh.wanandroid.utils.NetworkUtils;
 import com.jzh.wanandroid.utils.ScreenSwitch;
@@ -814,6 +815,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     public void showFragment(int resId, BaseFragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (showFragment != null) {
+            if (showFragment.getClass().getName().equals(fragment.getClass().getName())) {
+                return;
+            }
             fragmentTransaction.hide(showFragment);
         }
         Fragment mFragment = fragmentManager.findFragmentByTag(fragment.getClass().getName());

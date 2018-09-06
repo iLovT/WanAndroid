@@ -1,10 +1,5 @@
 package com.jzh.wanandroid.ui.base;
 
-import android.support.annotation.StringRes;
-import android.text.TextUtils;
-
-import com.jzh.wanandroid.MyApp;
-import com.jzh.wanandroid.R;
 import com.jzh.wanandroid.data.DataManager;
 import com.jzh.wanandroid.network.ExceptionHandle;
 import com.jzh.wanandroid.utils.AppLogger;

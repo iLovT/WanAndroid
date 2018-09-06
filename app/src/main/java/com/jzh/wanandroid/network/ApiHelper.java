@@ -11,6 +11,7 @@ import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoDeleteResponse;
 import com.jzh.wanandroid.entity.todo.TodoResponse;
 
 import io.reactivex.Observable;
@@ -130,4 +131,12 @@ public interface ApiHelper {
      * @return response
      */
     Observable<AddTodoResponse> doAddTodoApiCall(String title, String content, String date, int type);
+
+    /**
+     * 删除一条todo
+     *
+     * @param id id
+     * @return response
+     */
+    Observable<TodoDeleteResponse> doDeleteTodoApiCall(Long id);
 }

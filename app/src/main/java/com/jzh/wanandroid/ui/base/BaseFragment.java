@@ -42,7 +42,6 @@ import com.jzh.wanandroid.utils.toast.Toasty;
 import com.jzh.wanandroid.widget.LVCircularSmile;
 import com.jzh.wanandroid.widget.ProgressLoadingDialog;
 
-import org.greenrobot.greendao.annotation.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
     private BaseActivity baseActivity;
     private Unbinder mUnBinder;
-    private View baseView;
+    View baseView;
     private View view;
     private FrameLayout baseContentView;
     private Activity mActivity;
@@ -128,11 +127,9 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (getActivity().getApplication() != null) {
-            mFragmentComponent = DaggerFragmentComponent.builder()
-                    .fragmentModule(new FragmentModule(this))
-                    .applicationComponent(((MyApp) getActivity().getApplication()).getComponent()).build();
-        }
+        mFragmentComponent = DaggerFragmentComponent.builder()
+                .fragmentModule(new FragmentModule(this))
+                .applicationComponent(MyApp.getInstance().getComponent()).build();
         baseView = inflater.inflate(R.layout.title_base, container, false);
         initViews(baseView);
         if (getLayoutId() != 0) {
@@ -142,6 +139,10 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         initWidget(view);
         lazyLoad();
         return baseView;
+    }
+
+    public Activity getmActivity() {
+        return baseActivity == null ? mActivity : baseActivity;
     }
 
     /**
@@ -216,7 +217,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     public void checkPermissions(String... permissions) {
         try {
             if (Build.VERSION.SDK_INT >= 23
-                    && getActivity().getApplicationInfo().targetSdkVersion >= 23) {
+                    && getmActivity().getApplicationInfo().targetSdkVersion >= 23) {
                 List<String> needRequestPermissonList = findDeniedPermissions(permissions);
                 if (null != needRequestPermissonList
                         && needRequestPermissonList.size() > 0) {
@@ -225,6 +226,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
                 }
             }
         } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
@@ -236,9 +238,9 @@ public abstract class BaseFragment extends Fragment implements MvpView {
      * @since 2.5.0
      */
     private List<String> findDeniedPermissions(String[] permissions) {
-        List<String> needRequestPermissonList = new ArrayList<String>();
+        List<String> needRequestPermissonList = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= 23
-                && getActivity().getApplicationInfo().targetSdkVersion >= 23) {
+                && getmActivity().getApplicationInfo().targetSdkVersion >= 23) {
             try {
                 for (String perm : permissions) {
                     if (!hasPermission(perm) || shouldShowRequestPermissionRationale(perm)) {
@@ -271,7 +273,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     @Override
     @TargetApi(23)
     public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] paramArrayOfInt) {
+                                           @NonNull String[] permissions, @NonNull int[] paramArrayOfInt) {
         if (requestCode == PERMISSON_REQUESTCODE) {
             if (!verifyPermissions(paramArrayOfInt)) {
                 showMissingPermissionDialog();
@@ -286,7 +288,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
      * @since 2.5.0
      */
     public void showMissingPermissionDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
         builder.setTitle(R.string.notifyTitle);
         builder.setMessage(R.string.notifyMsg);
 
@@ -320,7 +322,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     private void startAppSettings() {
         Intent intent = new Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+        intent.setData(Uri.parse("package:" + getmActivity().getPackageName()));
         startActivity(intent);
         isNeedCheck = true;
     }
@@ -341,13 +343,13 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     /**
      * 是否拥有单个权限
      *
-     * @param permission
-     * @return
+     * @param permission permission
+     * @return true or false
      */
     @TargetApi(Build.VERSION_CODES.M)
     public boolean hasPermission(String permission) {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-                getActivity().checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+                getmActivity().checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
 
@@ -359,7 +361,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     @Override
     public void showErrorLayout(String msg) {
         hideErrorLayout();
-        View view = View.inflate(getActivity(), R.layout.base_network_error, null);
+        View view = View.inflate(getmActivity(), R.layout.base_network_error, null);
         TextView tv = view.findViewById(R.id.base_error_tv);
         tv.setText(TextUtils.isEmpty(msg) ? getString(R.string.network_error) : msg);
         baseContentView.addView(view);
@@ -419,12 +421,12 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     /**
      * 显示progressbar dialog
      *
-     * @param msg
+     * @param msg msg
      */
     @Override
     public void showProgressLoadingDialog(String msg) {
         hideLoading();
-        mProgressDialog = CommonUtils.showLoadingDialog(getActivity(), msg);
+        mProgressDialog = CommonUtils.showLoadingDialog(getmActivity(), msg);
     }
 
     /**
@@ -440,7 +442,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     /**
      * 设置标题
      *
-     * @param titleId
+     * @param titleId title id
      */
     public void setTitle(int titleId, boolean isShowLeft, boolean isShowSearch, boolean isShowRight) {
         titleTv.setText(getString(titleId));
@@ -601,42 +603,42 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         switch (type) {
             case 1:
                 if (null == toasty) {
-                    toasty = Toasty.success(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.success(getmActivity(), message, Toast.LENGTH_SHORT);
                 } else {
                     toasty.cancel();
-                    toasty = Toasty.success(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.success(getmActivity(), message, Toast.LENGTH_SHORT);
                 }
                 break;
             case 2:
                 if (null == toasty) {
-                    toasty = Toasty.error(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.error(getmActivity(), message, Toast.LENGTH_SHORT);
                 } else {
                     toasty.cancel();
-                    toasty = Toasty.error(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.error(getmActivity(), message, Toast.LENGTH_SHORT);
                 }
                 break;
             case 3:
                 if (null == toasty) {
-                    toasty = Toasty.info(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.info(getmActivity(), message, Toast.LENGTH_SHORT);
                 } else {
                     toasty.cancel();
-                    toasty = Toasty.info(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.info(getmActivity(), message, Toast.LENGTH_SHORT);
                 }
                 break;
             case 4:
                 if (null == toasty) {
-                    toasty = Toasty.warning(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.warning(getmActivity(), message, Toast.LENGTH_SHORT);
                 } else {
                     toasty.cancel();
-                    toasty = Toasty.warning(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.warning(getmActivity(), message, Toast.LENGTH_SHORT);
                 }
                 break;
             case 5:
                 if (null == toasty) {
-                    toasty = Toasty.normal(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.normal(getmActivity(), message, Toast.LENGTH_SHORT);
                 } else {
                     toasty.cancel();
-                    toasty = Toasty.normal(getActivity(), message, Toast.LENGTH_SHORT);
+                    toasty = Toasty.normal(getmActivity(), message, Toast.LENGTH_SHORT);
                 }
                 break;
             default:
@@ -674,10 +676,6 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         }
     }
 
-
-    public BaseActivity getBaseActivity() {
-        return baseActivity;
-    }
 
     public void setUnBinder(Unbinder unBinder) {
         mUnBinder = unBinder;
@@ -719,11 +717,11 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     }
 
     public void goActivityForResult(Class<?> descClass, int requestCode) {
-        ScreenSwitch.switchActivity(getActivity(), descClass, null, requestCode);
+        ScreenSwitch.switchActivity(getmActivity(), descClass, null, requestCode);
     }
 
     public void goActivityForResult(Class<?> descClass, Bundle bundle, int requestCode) {
-        ScreenSwitch.switchActivity(getActivity(), descClass, bundle, requestCode);
+        ScreenSwitch.switchActivity(getmActivity(), descClass, bundle, requestCode);
     }
 
     public void goActivity(Class<?> descClass, Bundle bundle) {

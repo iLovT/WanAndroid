@@ -10,6 +10,7 @@ import com.jzh.wanandroid.entity.navigation.NavigationResponse;
 import com.jzh.wanandroid.entity.project.ProjectListResponse;
 import com.jzh.wanandroid.entity.project.ProjectTypeResponse;
 import com.jzh.wanandroid.entity.todo.AddTodoResponse;
+import com.jzh.wanandroid.entity.todo.TodoDeleteResponse;
 import com.jzh.wanandroid.entity.todo.TodoResponse;
 
 import javax.inject.Inject;
@@ -98,5 +99,10 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<AddTodoResponse> doAddTodoApiCall(String title, String content, String date, int type) {
         return retrofit.create(ApiService.class).doAddTodoCall(title, content, date, type);
+    }
+
+    @Override
+    public Observable<TodoDeleteResponse> doDeleteTodoApiCall(Long id) {
+        return retrofit.create(ApiService.class).doDeleteTodoCall(id);
     }
 }

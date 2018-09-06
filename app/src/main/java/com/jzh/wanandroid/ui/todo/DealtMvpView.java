@@ -17,7 +17,11 @@ public interface DealtMvpView extends MvpView {
 
     void onFail(String msg);
 
+    void onDeleteSucc(String msg);
+
     interface DealtMvpPresenter<v extends DealtMvpView> extends MvpPresenter<v> {
         void doTodoListCall(int type, boolean isClick);
+
+        void doDeleteTodoCall(Long id);
     }
 }

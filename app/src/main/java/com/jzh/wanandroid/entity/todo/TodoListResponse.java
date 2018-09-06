@@ -72,7 +72,7 @@ public class TodoListResponse implements PropertyConverter<List<TodoListResponse
         private String content;
         private Long date;
         private String dateStr;
-        private Integer id;
+        private Long id;
         private Integer status;
         private String title;
         private Integer type;
@@ -118,11 +118,11 @@ public class TodoListResponse implements PropertyConverter<List<TodoListResponse
             this.dateStr = dateStr;
         }
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 

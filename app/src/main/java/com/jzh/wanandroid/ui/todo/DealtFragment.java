@@ -1,8 +1,10 @@
 package com.jzh.wanandroid.ui.todo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,7 +20,6 @@ import com.jzh.wanandroid.entity.todo.TodoListResponse;
 import com.jzh.wanandroid.entity.todo.TodoResponse;
 import com.jzh.wanandroid.entity.todo.TodoSection;
 import com.jzh.wanandroid.ui.base.BaseFragment;
-import com.jzh.wanandroid.utils.AppLogger;
 import com.jzh.wanandroid.utils.TypeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -55,8 +56,9 @@ public class DealtFragment extends BaseFragment implements DealtMvpView, OnRefre
     DealtPresenter<DealtMvpView> mPresenter;
     private TodoAdapter adapter;
     private boolean isDone;
-    private String format = "yyyy-MM-dd";
+    String format = "yyyy-MM-dd";
     private boolean isAdd;
+    private int deletePosition;
 
     @Override
     protected int getLayoutId() {
@@ -111,6 +113,7 @@ public class DealtFragment extends BaseFragment implements DealtMvpView, OnRefre
     private void setRreshParams() {
         mRefresh.setHeaderHeight(100f);
         mRefresh.setEnableRefresh(false);
+        mRefresh.setEnableLoadMore(false);
         mRefresh.setEnableLoadMoreWhenContentNotFull(false);
         mRefresh.setOnRefreshListener(this);
     }
@@ -126,11 +129,11 @@ public class DealtFragment extends BaseFragment implements DealtMvpView, OnRefre
 
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == -1 && requestCode == 300) {
-            AppLogger.e("DealtFragment", "真的  进入了   ");
             isAdd = true;
             showProgressLoadingDialog("加载中");
             mPresenter.doTodoListCall(0, false);
@@ -145,14 +148,15 @@ public class DealtFragment extends BaseFragment implements DealtMvpView, OnRefre
 
     @Override
     public void onSucc(TodoResponse response) {
-        AppLogger.e("DealtFragment", "真的  进入了  !!!!................ ");
         mRefresh.setEnableRefresh(true);
         if (mRefresh.getState() == RefreshState.Refreshing) {
             mRefresh.finishRefresh(true);
         }
         if (isAdd) {
             adapter.addData(getTodoSection(response.getDataBean()));
-            AppLogger.e("DealtFragment", "真的  进入了  !!!! ");
+            if (adapter.getItemCount() > 0) {
+                mRecycler.smoothScrollToPosition(adapter.getItemCount() - 1);
+            }
             isAdd = false;
             return;
         }
@@ -196,6 +200,21 @@ public class DealtFragment extends BaseFragment implements DealtMvpView, OnRefre
         }
     }
 
+    /**
+     * 删除成功
+     *
+     * @param msg msg
+     */
+    @Override
+    public void onDeleteSucc(String msg) {
+        onToastSucc(msg);
+        if (adapter == null || deletePosition < 0) {
+            return;
+        }
+        adapter.remove(deletePosition);
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -203,8 +222,33 @@ public class DealtFragment extends BaseFragment implements DealtMvpView, OnRefre
     }
 
     @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+    public void onItemChildClick(final BaseQuickAdapter adapter, View view, final int position) {
+        deletePosition = position;
+        final List<TodoSection> mDatas =  adapter.getData();
+        switch (view.getId()) {
+            case R.id.adapter_todo_delete:
+                new AlertDialog.Builder(getmActivity()).setTitle(R.string.notifyTitle)
+                        .setMessage(R.string.delete_sure)
+                        .setPositiveButton(R.string.commit, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
+                                showProgressLoadingDialog(getString(R.string.delete_loading));
+//                                mPresenter.doDeleteTodoCall(adapter.getData().s);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                break;
+            case R.id.adapter_todo_iv:
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
